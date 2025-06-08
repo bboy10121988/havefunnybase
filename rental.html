@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海放你基地</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="components/nav.js" type="text/javascript"></script>
+    <script src="components/header.js" type="text/javascript"></script>
+    <script src="components/footer.js" type="text/javascript"></script>
+    <script src="components/google-reviews.js" type="text/javascript"></script>
+    <style>
+        .rental-hero {
+            background: none;
+            color: var(--text-color);
+            text-align: center;
+            padding: 4rem 0 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .rental-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .rental-hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--text-color);
+        }
+        
+        /* 卡片按鈕和價格樣式 */
+        .price-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            margin-top: 1.5rem;
+            gap: 0.8rem;
+        }
+        
+        /* 基本按鈕樣式 */
+        .camp-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.7rem 0.8rem;
+            text-decoration: none;
+            border: 2px solid #002F43;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            flex: 1;
+            font-weight: 600;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            line-height: 1.1;
+            box-sizing: border-box;
+        }
+        
+        /* 主要按鈕 - 深藍背景白字 */
+        .camp-btn.add-cart {
+            background-color: #002F43;
+            color: white;
+        }
+        
+        .camp-btn.add-cart:hover {
+            background-color: #004f6a;
+        }
+        
+        /* 次要按鈕 - 白底深藍字 */
+        .camp-btn.secondary {
+            background-color: white;
+            color: #002F43;
+            border: none;
+        }
+        
+        .price {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.6rem 0.7rem;
+            background-color: white;
+            color: #002F43;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            white-space: nowrap;
+            flex: 1;
+            font-size: clamp(0.8rem, 2.2vw, 1.05rem);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.1;
+        }
+        
+        @media (max-width: 768px) {
+            .rental-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .price-info {
+                gap: 0.5rem;
+            }
+            
+            .camp-btn {
+                padding: 0.5rem 0.6rem;
+            }
+            
+            .price {
+                padding: 0.5rem 0.6rem;
+                font-size: clamp(0.75rem, 2vw, 0.95rem);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .price-info {
+                width: 100%;
+                gap: 0.4rem;
+            }
+            
+            .card-content {
+                padding: 1.2rem 1rem;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            .price-info {
+                gap: 0.3rem;
+            }
+            
+            .camp-btn {
+                padding: 0.45rem 0.5rem;
+                letter-spacing: -0.01em;
+                font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+            }
+            
+            .price {
+                padding: 0.45rem 0.5rem;
+                font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+            }
+            
+            .card-content {
+                padding: 1rem 0.8rem;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .camp-btn {
+                padding: 0.4rem 0.4rem;
+                font-size: 0.7rem;
+            }
+            
+            .price {
+                padding: 0.4rem 0.4rem;
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* 分頁樣式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 3rem 0;
+            gap: 1rem;
+        }
+        
+        .pagination button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        /* 調整卡片在小螢幕上的樣式 */
+        @media (max-width: 480px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                padding: 0.5rem;
+            }
+            
+            .card-image {
+                aspect-ratio: 4/3;
+            }
+            
+            .card-content {
+                padding: 1rem 0.8rem;
+            }
+            
+            .card-content h3 {
+                font-size: 1.1rem;
+                margin-bottom: 0.6rem;
+            }
+            
+            .card-content p {
+                font-size: 0.85rem;
+                margin-bottom: 0.8rem;
+                line-height: 1.4;
+            }
+            
+            .price-info {
+                margin-top: 1rem;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            .card-content {
+                padding: 1rem 0.8rem;
+            }
+            
+            .card-content h3 {
+                font-size: 1.2rem;
+            }
+            
+            .card-content p {
+                font-size: 0.85rem;
+                margin-bottom: 0.8rem;
+            }
+        }
+        
+        .pagination button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .pagination button.active {
+            background: var(--secondary-color);
+        }
+        
+        .pagination button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .page-info {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        /* 圖片載入改善 */
+        .card-image img {
+            background-color: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        
+        .card-image img:not([src]),
+        .card-image img[src=""] {
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="75" viewBox="0 0 100 75"><rect width="100" height="75" fill="%23ddd"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="%23999">載入中...</text></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+        
+        .card-image img.error {
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="75" viewBox="0 0 100 75"><rect width="100" height="75" fill="%23f8f9fa"/><text x="50%" y="40%" text-anchor="middle" dy=".3em" fill="%23666" font-size="10">圖片載入失敗</text><text x="50%" y="60%" text-anchor="middle" dy=".3em" fill="%23999" font-size="8">請重新整理頁面</text></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        /* 隱藏頁面 */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .rental-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .pagination {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .pagination button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <app-header></app-header>
+    
+    <main>
+        <!-- 主視覺區域 -->
+        <section class="rental-hero">
+            <div class="container">
+                <h1>海放你基地</h1>
+                <p>提供高品質露營裝備租借服務，讓您輕鬆享受戶外生活，無需負擔購買與維護的成本</p>
+            </div>
+        </section>
+
+        <!-- 活動卡片區域 -->
+        <section class="cards-section container">
+            <!-- 第一頁 -->
+            <div class="page active" id="page1">
+                <div class="cards-grid">
+                    <!-- 豪華帳篷 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="豪華帳篷" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>豪華露營帳篷 (4-6人)</h3>
+                            <p>防水、防風、透氣性佳的高品質帳篷，含有客廳區與睡眠區，附贈地席與營釘，安裝簡便。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
+                                <a href="#details" class="camp-btn secondary">$1200/天</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 睡袋 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="睡袋" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...'; console.log('睡袋圖片載入失敗');">
+                        </div>
+                        <div class="card-content">
+                            <h3>舒適保暖睡袋</h3>
+                            <p>適合三季使用的高品質睡袋，保暖舒適，輕巧便攜，可機洗，每次使用後均進行專業消毒。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
+                                <a href="#details" class="camp-btn secondary">$350/天</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 野炊用具 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="野炊用具" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>戶外野炊套裝</h3>
+                            <p>包含便攜式爐具、燃料、不鏽鋼炊具組、餐具組等，適合戶外烹飪使用，安全且便於攜帶。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
+                                <a href="#details" class="camp-btn secondary">$680/天</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 露營燈具 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="露營燈具" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>LED露營燈具組</h3>
+                            <p>含營地主燈、帳篷內部燈、頭燈等，亮度可調節，省電耐用，附充電電池，提供整晚照明需求。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
+                                <a href="#details" class="camp-btn secondary">$450/天</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 折疊桌椅 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="折疊桌椅" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>戶外摺疊桌椅組</h3>
+                            <p>輕量化鋁合金材質，便於攜帶，穩固耐用，含1張摺疊桌和4張摺疊椅，適合野餐、露營使用。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
+                                <a href="#details" class="camp-btn secondary">$580/天</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 便攜冰箱 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="便攜冰箱" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>戶外便攜冰箱</h3>
+                            <p>超強保冷效果，可保持食物新鮮，適合短期露營使用，容量適中，附有便利提手，堅固耐用。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
+                                <a href="#details" class="camp-btn secondary">$520/天</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第二頁 -->
+            <div class="page" id="page2">
+                <div class="cards-grid">
+                    <!-- 這裡之後可以添加更多租借裝備 -->
+                </div>
+            </div>
+
+            <!-- 分頁控制 -->
+            <div class="pagination">
+                <button onclick="previousPage()" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i> 上一頁
+                </button>
+                <span class="page-info">
+                    <span id="currentPage">1</span> / <span id="totalPages">1</span>
+                </span>
+                <button onclick="nextPage()" id="nextBtn">
+                    下一頁 <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <script>
+            let currentPageNum = 1;
+            const totalPagesNum = 1;
+
+            function showPage(pageNum) {
+                // 隱藏所有頁面
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // 顯示指定頁面
+                document.getElementById('page' + pageNum).classList.add('active');
+                
+                // 更新分頁資訊
+                document.getElementById('currentPage').textContent = pageNum;
+                currentPageNum = pageNum;
+                
+                // 更新按鈕狀態
+                document.getElementById('prevBtn').disabled = pageNum === 1;
+                document.getElementById('nextBtn').disabled = pageNum === totalPagesNum;
+            }
+
+            function nextPage() {
+                if (currentPageNum < totalPagesNum) {
+                    showPage(currentPageNum + 1);
+                }
+            }
+
+            function previousPage() {
+                if (currentPageNum > 1) {
+                    showPage(currentPageNum - 1);
+                }
+            }
+
+            // 初始化
+            showPage(1);
+            
+            // 添加圖片載入錯誤處理
+            document.addEventListener('DOMContentLoaded', function() {
+                const images = document.querySelectorAll('.card-image img');
+                images.forEach(img => {
+                    img.addEventListener('error', function() {
+                        console.warn('圖片載入失敗:', this.src);
+                        // 如果圖片載入失敗，使用佔位圖
+                        this.style.backgroundColor = '#f0f0f0';
+                        this.style.border = '2px solid #ddd';
+                        this.alt = '圖片暫時無法顯示';
+                    });
+                    
+                    img.addEventListener('load', function() {
+                        console.log('圖片載入成功:', this.src);
+                    });
+                });
+            });
+        </script>
+    </main>
+    
+    <app-footer></app-footer>
+</body>
+</html>

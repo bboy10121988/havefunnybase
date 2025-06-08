@@ -1,0 +1,787 @@
+/* 全局樣式 */
+:root {
+  --primary-color: #2B6CB0;
+  --secondary-color: #4299E1;
+  --text-color: #2D3748;
+  --light-text: #FFFFFF;
+  --background-color: #F7FAFC;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  min-height: 100vh;
+}
+
+main {
+  padding-top: 2rem;
+}
+
+/* Header 樣式 */
+.hero-header {
+  position: relative;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4');
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+}
+
+.hero-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.2) 30%,
+    rgba(0, 0, 0, 0.2) 70%,
+    rgba(0, 0, 0, 0.6)
+  );
+  z-index: -1;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.logo-container {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-container a {
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  display: inline-block;
+  width: 300px;
+  height: 300px;
+  background-image: url('../images/logo.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.3s ease;
+}
+
+.logo-container a:hover {
+  transform: scale(1.05);
+}
+
+.logo {
+  display: none;
+}
+
+.subtitle {
+  display: none;
+}
+
+/* 導航選單樣式 */
+.main-nav {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1.2rem 0;
+  margin-top: auto;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.main-nav li {
+  position: relative;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: #002F43; /* 設置導航連結的顏色為 #002F43 */
+  font-weight: 500;
+  padding: 0.8rem 1.2rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.main-nav a:not(.cta-button):hover {
+  color: #1A237E;
+  background: rgba(26, 35, 126, 0.1);
+}
+
+.main-nav a.active:not(.cta-button) {
+  color: #1A237E;
+  background: rgba(26, 35, 126, 0.1);
+}
+
+.cta-button {
+  background: #002F43;
+  color: white !important;
+  padding: 0.8rem 1.5rem !important;
+  border-radius: 25px !important;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 47, 67, 0.3);
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 47, 67, 0.4);
+  background: #002F43;
+}
+
+.mobile-menu-btn {
+  display: none;
+  border: none;
+  background: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #1A237E;
+}
+
+@media (max-width: 1024px) {
+  .header-content {
+    padding: 1rem;
+  }
+  .main-nav ul {
+    gap: 1rem;
+  }
+  .subtitle {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: none; /* 隱藏 mobile menu 按鈕，因為我們不再使用隱藏選單 */
+  }
+  /* 移除舊的隱藏選單樣式，由 header.js 中的新響應式樣式接管 */
+  .subtitle {
+    display: none;
+  }
+  
+  /* 手機版 hero 背景變成 1:1 尺寸 */
+  .hero-header {
+    min-height: 100vw; /* 使用視窗寬度作為高度，形成1:1比例 */
+    max-height: 100vh; /* 但不超過視窗高度 */
+  }
+  
+  .hero-header::before {
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+/* 卡片區塊樣式 */
+.cards-section {
+  padding: 4rem 0;
+  background-color: var(--background-color);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-image {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  width: 100%;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-image img {
+  transform: scale(1.1);
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.card-content p {
+  margin-bottom: 1.5rem;
+  color: #666;
+}
+
+.learn-more {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #002F43;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  text-align: left; /* 將卡片按鈕文字向左對齊 */
+}
+
+.learn-more:hover {
+  background-color: #004f6a;
+}
+
+.cta-card .card-content {
+  text-align: left; /* 修正按鈕對齊方式，避免覆蓋 .learn-more 的設定 */
+}
+
+.card-content .learn-more {
+  display: inline-block;
+  text-align: left;
+  margin-top: 1rem; /* 確保按鈕與其他內容有一致的間距 */
+}
+
+.price-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #FF6B35;
+  margin-left: 1rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.price-info .learn-more {
+  margin-top: 0;
+  font-size: 1.1rem;
+  padding: 0.6rem 1.2rem;
+}
+
+.cta-card .card-content .learn-more {
+  text-align: left !important; /* 強化優先級，確保按鈕文字向左對齊 */
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .main-nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .logo {
+    max-width: 150px;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .card-image {
+    aspect-ratio: 4/3;
+  }
+}
+
+/* 頁尾樣式 */
+.site-footer {
+  background-color: #2D3748;
+  color: #FFFFFF;
+  padding: 4rem 0 2rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.footer-section h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #FFFFFF;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.8rem;
+}
+
+.footer-section ul li a {
+  color: #CBD5E0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #FFFFFF;
+}
+
+.contact-info li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #CBD5E0;
+}
+
+.contact-info i {
+  width: 20px;
+  color: var(--secondary-color);
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.social-link:hover {
+  background-color: var(--secondary-color);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #CBD5E0;
+}
+
+/* 基本容器 */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 營地頁面樣式 */
+.location-page {
+  padding: 4rem 0;
+  background-color: var(--background-color);
+}
+
+.location-content {
+  background-color: #FFFFFF;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.location-content h1 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.location-description {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+/* 價目表樣式 */
+.price-list {
+  margin: 4rem auto;
+  max-width: 1200px;
+  padding: 0 1.5rem;
+}
+
+.price-list h2 {
+  text-align: center;
+  color: #1A237E;
+  margin-bottom: 3rem;
+  font-size: 2.2rem;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.price-list h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(to right, #1976D2, #64B5F6);
+  border-radius: 2px;
+}
+
+.price-card {
+  background: #FFFFFF;
+  border-radius: 15px;
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.price-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, #1976D2, #64B5F6);
+}
+
+.price-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.price-card h3 {
+  color: #1A237E;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: left;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.price-card h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background: #1976D2;
+}
+
+.price-details {
+  padding: 1rem 0;
+}
+
+.price {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #1A237E;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.price span {
+  font-size: 1.2rem;
+  color: #455A64;
+  padding: 0.3rem 0.8rem;
+  background: #F1F5F9;
+  border-radius: 4px;
+}
+
+.price-includes {
+  list-style: none;
+  padding: 0;
+  margin-top: 2rem;
+}
+
+.price-includes li {
+  padding: 0.8rem 0;
+  color: #455A64;
+  display: flex;
+  align-items: center;
+}
+
+.price-includes li::before {
+  content: '✓';
+  color: #4CAF50;
+  margin-right: 1rem;
+  font-weight: bold;
+}
+
+.price-notes {
+  background: #F8FAFC;
+  border-radius: 15px;
+  padding: 2.5rem;
+  margin-top: 4rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.price-notes h3 {
+  color: #1A237E;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.price-notes ul {
+  list-style: none;
+  padding: 0;
+}
+
+.price-notes li {
+  padding: 0.8rem 0;
+  color: #455A64;
+  display: flex;
+  align-items: center;
+}
+
+.price-notes li::before {
+  content: '•';
+  color: #1976D2;
+  margin-right: 1rem;
+  font-size: 1.5rem;
+  line-height: 0;
+}
+
+@media (min-width: 768px) {
+  .price-list .price-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+    
+  .price-notes {
+    grid-column: 1 / -1;
+  }
+}
+
+/* 設施列表樣式 */
+.facilities {
+  margin-top: 4rem;
+  padding: 3rem 0;
+  background: linear-gradient(to bottom right, #EBF4FF, #F0F9FF);
+  border-radius: 15px;
+}
+
+.facilities h2 {
+  text-align: center;
+  color: #1A237E;
+  margin-bottom: 3rem;
+  font-size: 2.2rem;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.facilities h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(to right, #1976D2, #64B5F6);
+  border-radius: 2px;
+}
+
+.facilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.facility-item {
+  text-align: center;
+  padding: 2rem;
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.facility-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.facility-item i {
+  font-size: 2.5rem;
+  color: #1976D2;
+  margin-bottom: 1.5rem;
+  background: #EBF4FF;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.facility-item:hover i {
+  background: #1976D2;
+  color: #FFFFFF;
+  transform: scale(1.1);
+}
+
+.facility-item h4 {
+  color: #1A237E;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.facility-item p {
+  color: #455A64;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 介紹頁面樣式 */
+.intro-page {
+  padding: 4rem 0;
+  background-color: var(--background-color);
+}
+
+.intro-content {
+  background-color: #FFFFFF;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.intro-content h1 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.intro-content h2 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin: 2rem 0 1rem;
+}
+
+.intro-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.intro-text p {
+  margin-bottom: 1.5rem;
+}
+
+.intro-text ul {
+  list-style-type: none;
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.intro-text ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.intro-text ul li:before {
+  content: "•";
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  position: absolute;
+  left: 0;
+  top: -0.2rem;
+}
+
+.main-nav a.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* 響應式頁尾 */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .contact-info li {
+    justify-content: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+}
+
+.cta-card .learn-more {
+  text-align: left; /* 確保這三個卡片的按鈕文字向左對齊 */
+}

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海放計畫 - 聯誼活動</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="components/nav.js" type="text/javascript"></script>
+    <script src="components/header.js" type="text/javascript"></script>
+    <script src="components/footer.js" type="text/javascript"></script>
+    <script src="components/google-reviews.js" type="text/javascript"></script>
+    <style>
+        .plan-hero {
+            background: none;
+            color: var(--text-color);
+            text-align: center;
+            padding: 4rem 0 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .plan-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .plan-hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--text-color);
+        }
+        
+        /* 卡片按鈕和價格樣式 */
+        .price-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            margin-top: 1.5rem;
+            gap: 0.8rem;
+        }
+        
+        /* 基本按鈕樣式 */
+        .camp-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.7rem 0.8rem;
+            text-decoration: none;
+            border: 2px solid #002F43;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            flex: 1;
+            font-weight: 600;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            line-height: 1.1;
+            box-sizing: border-box;
+        }
+        
+        /* 主要按鈕 - 深藍背景白字 */
+        .camp-btn.add-cart {
+            background-color: #002F43;
+            color: white;
+        }
+        
+        .camp-btn.add-cart:hover {
+            background-color: #004f6a;
+        }
+        
+        /* 次要按鈕 - 白底深藍字 */
+        .camp-btn.secondary {
+            background-color: white;
+            color: #002F43;
+            border: none;
+        }
+        
+        .price {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.6rem 0.7rem;
+            background-color: white;
+            color: #002F43;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            white-space: nowrap;
+            flex: 1;
+            font-size: clamp(0.8rem, 2.2vw, 1.05rem);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.1;
+        }
+        
+        @media (max-width: 768px) {
+            .plan-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .price-info {
+                gap: 0.5rem;
+            }
+            
+            .camp-btn {
+                padding: 0.5rem 0.6rem;
+            }
+            
+            .price {
+                padding: 0.5rem 0.6rem;
+                font-size: clamp(0.75rem, 2vw, 0.95rem);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .price-info {
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+            }
+            
+            .camp-btn, .price {
+                padding: 0.5rem 0.4rem;
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            .price-info {
+                gap: 0.3rem;
+            }
+            
+            .camp-btn {
+                padding: 0.45rem 0.5rem;
+                letter-spacing: -0.01em;
+                font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+            }
+            
+            .price {
+                padding: 0.45rem 0.5rem;
+                font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+            }
+            
+            .card-content {
+                padding: 1rem 0.8rem;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .camp-btn {
+                padding: 0.4rem 0.4rem;
+                font-size: 0.7rem;
+            }
+            
+            .price {
+                padding: 0.4rem 0.4rem;
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* 分頁樣式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 3rem 0;
+            gap: 1rem;
+        }
+        
+        .pagination button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        /* 調整卡片在小螢幕上的樣式 */
+        @media (max-width: 480px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                padding: 0.5rem;
+            }
+            
+            .card-image {
+                aspect-ratio: 4/3;
+            }
+            
+            .card-content {
+                padding: 1rem 0.8rem;
+            }
+            
+            .card-content h3 {
+                font-size: 1.1rem;
+                margin-bottom: 0.6rem;
+            }
+            
+            .card-content p {
+                font-size: 0.85rem;
+                margin-bottom: 0.8rem;
+                line-height: 1.4;
+            }
+            
+            .price-info {
+                margin-top: 1rem;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            .card-content {
+                padding: 1rem 0.8rem;
+            }
+            
+            .card-content h3 {
+                font-size: 1.2rem;
+            }
+            
+            .card-content p {
+                font-size: 0.85rem;
+                margin-bottom: 0.8rem;
+            }
+        }
+        
+        .pagination button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .pagination button.active {
+            background: var(--secondary-color);
+        }
+        
+        .pagination button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .page-info {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        /* 隱藏頁面 */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .plan-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .pagination {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .pagination button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <app-header></app-header>
+    
+    <main>
+        <!-- 主視覺區域 -->
+        <section class="plan-hero">
+            <div class="container">
+                <h1>海放計畫 - 聯誼活動</h1>
+                <p>各式特色聯誼活動，從浪漫沙灘派對到刺激的戶外冒險，為您創造難忘的社交體驗</p>
+            </div>
+        </section>
+
+        <!-- 活動卡片區域 -->
+        <section class="cards-section container">
+            <!-- 第一頁 -->
+            <div class="page active" id="page1">
+                <div class="cards-grid">
+                    <!-- 沙灘派對 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1517686748843-bb360cfc62b3?w=400" alt="沙灘派對">
+                        </div>
+                        <div class="card-content">
+                            <h3>沙灘派對聯誼</h3>
+                            <p>在美麗的沙灘上，伴隨著海浪聲和營火，結交新朋友，享受美食與音樂，以及各種有趣的互動遊戲。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
+                                <a href="#details" class="camp-btn secondary">$1580/人</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 登山健行 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=400" alt="登山健行">
+                        </div>
+                        <div class="card-content">
+                            <h3>登山健行聯誼</h3>
+                            <p>一起攀登山峰，享受大自然的美景，在徒步旅行中分享彼此的故事，在共同克服挑戰中建立深厚友誼。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
+                                <a href="#details" class="camp-btn secondary">$1980/人</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 野炊烹飪 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1504609813442-a8924e83f76e?w=400" alt="野炊烹飪">
+                        </div>
+                        <div class="card-content">
+                            <h3>野炊烹飪聯誼</h3>
+                            <p>在戶外學習烹飪技巧，一起準備美味料理，分享用餐的樂趣，是結交美食愛好者朋友的絕佳機會。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
+                                <a href="#details" class="camp-btn secondary">$1780/人</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 星空觀測 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=400" alt="星空觀測">
+                        </div>
+                        <div class="card-content">
+                            <h3>星空觀測聯誼</h3>
+                            <p>在遠離城市光害的地方，一起觀賞璀璨星空，學習星座知識，浪漫的氛圍非常適合結交志同道合的朋友。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
+                                <a href="#details" class="camp-btn secondary">$1680/人</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 海洋探險 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=400" alt="海洋探險">
+                        </div>
+                        <div class="card-content">
+                            <h3>海洋探險聯誼</h3>
+                            <p>體驗獨木舟、浮潛等水上活動，探索海洋生態，感受海洋的魅力，適合喜愛冒險的單身人士參加。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
+                                <a href="#details" class="camp-btn secondary">$2280/人</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 單車之旅 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1503669678209-c68d00b3765d?w=400" alt="單車之旅">
+                        </div>
+                        <div class="card-content">
+                            <h3>單車之旅聯誼</h3>
+                            <p>一起騎行於風景優美的自行車道，享受騎行的樂趣，在休息點交流互動，是健康又充滿活力的社交方式。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
+                                <a href="#details" class="camp-btn secondary">$1480/人</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第二頁 -->
+            <div class="page" id="page2">
+                <div class="cards-grid">
+                    <!-- 這裡之後可以添加更多聯誼活動 -->
+                </div>
+            </div>
+
+            <!-- 分頁控制 -->
+            <div class="pagination">
+                <button onclick="previousPage()" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i> 上一頁
+                </button>
+                <span class="page-info">
+                    <span id="currentPage">1</span> / <span id="totalPages">1</span>
+                </span>
+                <button onclick="nextPage()" id="nextBtn">
+                    下一頁 <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <script>
+            let currentPageNum = 1;
+            const totalPagesNum = 1;
+
+            function showPage(pageNum) {
+                // 隱藏所有頁面
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // 顯示指定頁面
+                document.getElementById('page' + pageNum).classList.add('active');
+                
+                // 更新分頁資訊
+                document.getElementById('currentPage').textContent = pageNum;
+                currentPageNum = pageNum;
+                
+                // 更新按鈕狀態
+                document.getElementById('prevBtn').disabled = pageNum === 1;
+                document.getElementById('nextBtn').disabled = pageNum === totalPagesNum;
+            }
+
+            function nextPage() {
+                if (currentPageNum < totalPagesNum) {
+                    showPage(currentPageNum + 1);
+                }
+            }
+
+            function previousPage() {
+                if (currentPageNum > 1) {
+                    showPage(currentPageNum - 1);
+                }
+            }
+
+            // 初始化
+            showPage(1);
+        </script>
+    </main>
+    
+    <app-footer></app-footer>
+</body>
+</html>

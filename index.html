@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海放你基地-露營 聯誼 營隊</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="components/nav.js" type="text/javascript"></script>
+    <script src="components/header.js" type="text/javascript"></script>
+    <script src="components/footer.js" type="text/javascript"></script>
+    <script src="components/google-map.js" type="text/javascript"></script>
+    <script src="components/google-reviews.js" type="text/javascript"></script>
+</head>
+<body>
+    <app-header></app-header>
+      <main>
+        <section class="cards-section container">
+            <div class="cards-grid">
+                <!-- 海放你基地 -->
+                <div class="card">
+                    <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4" alt="海放你基地">
+          </div>
+          <div class="card-content">
+            <h3>海放你基地</h3>
+            <p>體驗最美麗的海景露營地，讓您與家人朋友共享難忘的露營時光。</p>
+            <a href="intro.html" class="learn-more">了解更多</a>
+          </div>
+        </div>
+
+        <!-- 海放計畫 -->
+        <div class="card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7" alt="海放計畫">
+          </div>
+          <div class="card-content">
+            <h3>海放計畫</h3>
+            <p>專業的露營課程與體驗活動，帶您深入了解大自然的奧妙。</p>
+            <a href="#plan" class="learn-more">了解更多</a>
+          </div>
+        </div>
+
+        <!-- 海放兒童營隊 -->
+        <div class="card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1517164850305-99a3e65bb47e" alt="海放兒童營隊">
+          </div>
+          <div class="card-content">
+            <h3>海放兒童營隊</h3>
+            <p>專為孩子設計的自然教育營隊，培養冒險精神與環境意識。</p>
+            <a href="#kids-camp" class="learn-more">了解更多</a>
+          </div>
+        </div>
+            </div>
+        </section>
+        
+        <!-- Google 評論區塊 -->
+        <google-reviews></google-reviews>
+    </main>
+    <app-footer></app-footer>
+</body>
+</html>
