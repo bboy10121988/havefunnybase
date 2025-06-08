@@ -6,8 +6,8 @@
     <title>海放你基地 - 關於我們</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap">
-    <script src="/components/nav.js" type="text/javascript" defer></script>
     <script src="/components/header.js" type="text/javascript" defer></script>
+    <script src="/components/nav.js" type="text/javascript" defer></script>
     <script src="/components/footer.js" type="text/javascript" defer></script>
     <!-- 確保自定義元件已註冊 -->
     <script>
@@ -15,7 +15,7 @@
             setTimeout(() => {
                 if (!customElements.get('app-header') || 
                     !customElements.get('app-footer') ||
-                    !customElements.get('app-nav')) {
+                    !customElements.get('navigation-component')) {
                     console.error('自定義元件未正確載入');
                 }
             }, 100);
@@ -215,6 +215,7 @@
 </head>
 <body>
     <app-header></app-header>
+    <navigation-component></navigation-component>
     <main>
         <!-- 單文置中 - 標題介紹 -->
         <section class="intro-section">
