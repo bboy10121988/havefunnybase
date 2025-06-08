@@ -77,12 +77,20 @@ class Header extends HTMLElement {
                 /* 主橫幅樣式 */
                 .main-banner {
                     width: 100%;
-                    height: 70vh; /* 設定高度為視窗高度的70% */
+                    aspect-ratio: 4/3;
+                    max-height: 600px; /* 限制最大高度 */
                     background-image: url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
                     background-size: cover;
                     background-position: center;
                     background-repeat: no-repeat;
                     position: relative;
+                }
+
+                /* 在較大螢幕上調整最大高度 */
+                @media (min-width: 1400px) {
+                    .main-banner {
+                        max-height: 700px;
+                    }
                 }
 
                 /* 橫幅覆蓋層 - 提供漸變效果並增加文字可讀性 */

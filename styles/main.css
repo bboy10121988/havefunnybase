@@ -334,14 +334,31 @@ main {
   .subtitle {
     font-size: 1.5rem;
   }
+}
 
-  .cards-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+/* 首頁卡片在手機版時的特殊樣式 */
+@media (max-width: 768px) {
+  .cards-section .cards-grid {
+    grid-template-columns: 1fr;  /* 一列一個卡片 */
+    gap: 2rem;
+    padding: 1rem;
   }
   
-  .card-image {
-    aspect-ratio: 4/3;
+  .cards-section .card-image {
+    aspect-ratio: 16/9;  /* 更寬的圖片比例 */
+  }
+  
+  .cards-section .card-content {
+    padding: 1.5rem;
+  }
+  
+  .cards-section .card-content h3 {
+    font-size: 1.8rem;
+  }
+  
+  .cards-section .card-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
   }
 }
 
