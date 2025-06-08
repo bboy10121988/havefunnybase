@@ -1,4 +1,4 @@
-class Header extends HTMLElement {
+class AppHeader extends HTMLElement {
     constructor() {
         super();
     }
@@ -370,4 +370,4 @@ class Header extends HTMLElement {
     }
 }
 
-customElements.define('app-header', Header);
+customElements.define('app-header', AppHeader);
