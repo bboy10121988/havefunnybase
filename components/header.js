@@ -80,7 +80,7 @@ class AppHeader extends HTMLElement {
                     width: 100%;
                     aspect-ratio: 4/3;
                     max-height: 600px; /* 限制最大高度 */
-                    background-image: url('../images/Main-banner01.webp');
+                    background-image: url('../images/main-banner01.webp');
                     background-size: cover;
                     background-position: center;
                     background-repeat: no-repeat;
