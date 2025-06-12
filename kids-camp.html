@@ -195,9 +195,7 @@
         /* 調整卡片在小螢幕上的樣式 */
         @media (max-width: 480px) {
             .cards-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-                padding: 0.5rem;
+                grid-template-columns: 1fr;
             }
             
             .card-image {
@@ -283,6 +281,25 @@
                 font-size: 0.9rem;
             }
         }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            padding: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -302,92 +319,17 @@
             <!-- 第一頁 -->
             <div class="page active" id="page1">
                 <div class="cards-grid">
-                    <!-- 小小探險家營 -->
+                    <!-- 單一活動卡片 -->
                     <div class="card">
                         <div class="card-image">
                             <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="小小探險家營">
                         </div>
                         <div class="card-content">
-                            <h3>小小探險家營</h3>
-                            <p>專為6-8歲小朋友設計的2天1夜營隊，透過簡單有趣的活動認識大自然，包含植物觀察、昆蟲探索、自然手作等。</p>
+                            <h3>海放兒童營隊 - 五天四夜探索之旅</h3>
+                            <p>暑假後升國小二年級至六年級，橫跨山海的自然文化體驗，包含露營、海洋公園夜宿、阿美族文化體驗與太平洋潮間帶導覽。</p>
                             <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
-                                <a href="#details" class="camp-btn secondary">$3580</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 海洋守護者營 -->
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400" alt="海洋守護者營">
-                        </div>
-                        <div class="card-content">
-                            <h3>海洋守護者營</h3>
-                            <p>適合9-12歲孩子的3天2夜營隊，深入了解海洋生態，學習環境保護的重要性，透過實際行動成為海洋的守護者。</p>
-                            <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
-                                <a href="#details" class="camp-btn secondary">$4750</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 野外生存挑戰營 -->
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=400" alt="野外生存挑戰營">
-                        </div>
-                        <div class="card-content">
-                            <h3>野外生存挑戰營</h3>
-                            <p>為13-15歲青少年準備的4天3夜進階挑戰課程，學習基本野外生存技能，建立獨立自主的能力。</p>
-                            <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
-                                <a href="#details" class="camp-btn secondary">$5980</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 森林探索營 -->
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400" alt="森林探索營">
-                        </div>
-                        <div class="card-content">
-                            <h3>森林探索營</h3>
-                            <p>深入台灣原始森林，學習植物辨識、動物追蹤、生態攝影等技能，培養孩子對大自然的敬畏與熱愛。</p>
-                            <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
-                                <a href="#details" class="camp-btn secondary">$4280</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 星空觀測營 -->
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=400" alt="星空觀測營">
-                        </div>
-                        <div class="card-content">
-                            <h3>星空觀測營</h3>
-                            <p>在無光害的環境中觀察星空，學習天文知識，使用專業望遠鏡觀測星座、行星，激發孩子對宇宙的好奇心。</p>
-                            <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
-                                <a href="#details" class="camp-btn secondary">$3890</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 溪流生態營 -->
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400" alt="溪流生態營">
-                        </div>
-                        <div class="card-content">
-                            <h3>溪流生態營</h3>
-                            <p>在清澈的溪流中觀察水生生物，學習溪流生態系統，體驗溯溪樂趣，了解水資源保護的重要性。</p>
-                            <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
-                                <a href="#details" class="camp-btn secondary">$4120</a>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfVGqnUmKFdnER1mon1QWVM57sd6AcP5HwpIXbCUBuJytrgjA/viewform" class="camp-btn add-cart">立即報名</a>
+                                <a href="#details" class="camp-btn secondary">$12,000</a>
                             </div>
                         </div>
                     </div>
