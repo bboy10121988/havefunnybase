@@ -74,6 +74,7 @@ class AppHeader extends HTMLElement {
                 </div>
             </div>
 
+            
             <style>
                 /* 主橫幅樣式 */
                 .main-banner {
