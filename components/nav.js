@@ -16,10 +16,10 @@ class Navigation extends HTMLElement {
                     </div>
                 </div>
                 
-                <!-- 中間: Logo (手機版) -->
+                <!-- 中間: 標題 (手機版) -->
                 <div class="mobile-title">
                     <a href="index.html" class="logo-link">
-                        <img src="images/logo.jpg" alt="海放你基地" class="mobile-logo">
+                        <span class="mobile-title-text">海放你基地</span>
                     </a>
                 </div>
                 
@@ -303,10 +303,11 @@ class Navigation extends HTMLElement {
                     display: inline-block;
                 }
                 
-                .mobile-logo {
-                    height: 40px;
-                    width: auto;
-                    display: block;
+                .mobile-title-text {
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    color: var(--primary-color);
+                    text-decoration: none;
                 }
                 
                 /* 響應式設計 */

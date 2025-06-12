@@ -215,6 +215,21 @@
             }
         }
         
+        /* 卡片對齊：統一標題和描述高度 */
+        .card-content h3 {
+            height: 2.4em; /* 固定2行高度 */
+            line-height: 1.2;
+            overflow: hidden;
+            margin-bottom: 0.8rem;
+        }
+        
+        .card-content p {
+            height: 5.6em; /* 固定4行高度 */
+            line-height: 1.4;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
         @media (max-width: 375px) {
             .card-content {
                 padding: 1rem 0.8rem;
@@ -222,11 +237,13 @@
             
             .card-content h3 {
                 font-size: 1.2rem;
+                height: 2.4em; /* 保持固定高度 */
             }
             
             .card-content p {
                 font-size: 0.85rem;
                 margin-bottom: 0.8rem;
+                height: 4.76em; /* 根據較小字體調整高度 */
             }
         }
         
@@ -293,92 +310,77 @@
             <!-- 第一頁 -->
             <div class="page active" id="page1">
                 <div class="cards-grid">
-                    <!-- 沙灘派對 -->
+                    <!-- 海放粉絲破萬限定優惠 -->
                     <div class="card">
                         <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1517686748843-bb360cfc62b3?w=400" alt="沙灘派對">
+                            <img src="https://images.unsplash.com/photo-1517686748843-bb360cfc62b3?w=400" alt="海放粉絲破萬限定優惠">
                         </div>
                         <div class="card-content">
-                            <h3>沙灘派對聯誼</h3>
-                            <p>在美麗的沙灘上，伴隨著海浪聲和營火，結交新朋友，享受美食與音樂，以及各種有趣的互動遊戲。</p>
+                            <h3>6/13-15 海放粉絲破萬限定優惠！</h3>
+                            <p>慶祝海放計畫粉絲破萬，特別推出限定優惠活動！三天兩夜的特別企劃，包含精彩的聯誼活動、美食饗宴，還有驚喜好禮等著您！</p>
                             <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
-                                <a href="#details" class="camp-btn secondary">$1580/人</a>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdEPth9wXJHQmGIwbWx0Sw081UHX0-4SQctYn58aqxTugW5jQ/viewform" target="_blank" class="camp-btn add-cart">立即報名</a>
+                                <span class="price">特惠價格</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 登山健行 -->
+                    <!-- 7月海放升級限定一般場 -->
                     <div class="card">
                         <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=400" alt="登山健行">
+                            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400" alt="夜宿海生館聯誼">
                         </div>
                         <div class="card-content">
-                            <h3>登山健行聯誼</h3>
-                            <p>一起攀登山峰，享受大自然的美景，在徒步旅行中分享彼此的故事，在共同克服挑戰中建立深厚友誼。</p>
+                            <h3>7/18-20 海放升級限定(一般場)</h3>
+                            <p>夜宿海生館聯誼囉！在海洋世界中度過浪漫夜晚，與海洋生物共眠，體驗前所未有的約會新體驗。包含導覽、夜宿體驗及聯誼活動。</p>
                             <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
-                                <a href="#details" class="camp-btn secondary">$1980/人</a>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdc4ifmiIGdYGpra7IzO1R1aOg7nhSPTWej6nBnoVBqYFXEoQ/viewform" target="_blank" class="camp-btn add-cart">立即報名</a>
+                                <span class="price">專案價格</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 野炊烹飪 -->
+                    <!-- 8月海放升級限定熟齡場 -->
                     <div class="card">
                         <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1504609813442-a8924e83f76e?w=400" alt="野炊烹飪">
+                            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400" alt="熟齡夜宿海生館">
                         </div>
                         <div class="card-content">
-                            <h3>野炊烹飪聯誼</h3>
-                            <p>在戶外學習烹飪技巧，一起準備美味料理，分享用餐的樂趣，是結交美食愛好者朋友的絕佳機會。</p>
+                            <h3>8/29-31 海放升級限定(熟齡場)</h3>
+                            <p>專為熟齡朋友設計的夜宿海生館聯誼活動！在寧靜的海洋氛圍中，與志同道合的朋友共度美好時光，體驗成熟優雅的聯誼方式。</p>
                             <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
-                                <a href="#details" class="camp-btn secondary">$1780/人</a>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfgYzfOiQzGWGyCPFctm-ri6OZv-GJZRNsu3QJ-jcXhLWQYkQ/viewform" target="_blank" class="camp-btn add-cart">立即報名</a>
+                                <span class="price">專案價格</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 星空觀測 -->
+                    <!-- 9月海放升級限定一般場 -->
                     <div class="card">
                         <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=400" alt="星空觀測">
+                            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400" alt="九月夜宿海生館">
                         </div>
                         <div class="card-content">
-                            <h3>星空觀測聯誼</h3>
-                            <p>在遠離城市光害的地方，一起觀賞璀璨星空，學習星座知識，浪漫的氛圍非常適合結交志同道合的朋友。</p>
+                            <h3>9/12-14 海放升級限定(一般場)</h3>
+                            <p>九月份的夜宿海生館聯誼再次登場！繼續這個受歡迎的活動，讓您在海洋的懷抱中尋找真愛，創造難忘的浪漫回憶。</p>
                             <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
-                                <a href="#details" class="camp-btn secondary">$1680/人</a>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdt9P3fiUQnDeJXbulSxfiIdlgFHQIgRLcdrQ_hv848R-sTZQ/viewform" target="_blank" class="camp-btn add-cart">立即報名</a>
+                                <span class="price">專案價格</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 海洋探險 -->
+                    <!-- 10月大齡加場 -->
                     <div class="card">
                         <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=400" alt="海洋探險">
+                            <img src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=400" alt="大齡加場">
                         </div>
                         <div class="card-content">
-                            <h3>海洋探險聯誼</h3>
-                            <p>體驗獨木舟、浮潛等水上活動，探索海洋生態，感受海洋的魅力，適合喜愛冒險的單身人士參加。</p>
+                            <h3>10/24-26 大齡加場5</h3>
+                            <p>三天兩夜的大齡專場！專為30歲以上朋友量身打造的聯誼活動，在輕鬆自在的氛圍中，遇見人生的另一半。</p>
                             <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
-                                <a href="#details" class="camp-btn secondary">$2280/人</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 單車之旅 -->
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1503669678209-c68d00b3765d?w=400" alt="單車之旅">
-                        </div>
-                        <div class="card-content">
-                            <h3>單車之旅聯誼</h3>
-                            <p>一起騎行於風景優美的自行車道，享受騎行的樂趣，在休息點交流互動，是健康又充滿活力的社交方式。</p>
-                            <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即報名</a>
-                                <a href="#details" class="camp-btn secondary">$1480/人</a>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLScYhTSST6xWVESD1VlKasU4qcWNKO8DSmsiZUVe3M1q-URgFw/viewform" target="_blank" class="camp-btn add-cart">立即報名</a>
+                                <span class="price">專案價格</span>
                             </div>
                         </div>
                     </div>

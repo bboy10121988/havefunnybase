@@ -33,6 +33,33 @@
             color: var(--text-color);
         }
         
+        /* 分類間距樣式 */
+        .category-section {
+            margin-bottom: 4rem;
+        }
+        
+        .category-section:last-child {
+            margin-bottom: 2rem;
+        }
+        
+        .category-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .category-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .category-section {
+                margin-bottom: 3rem;
+            }
+        }
+        
         /* 卡片按鈕和價格樣式 */
         .price-info {
             display: flex;
@@ -221,11 +248,36 @@
             .card-content h3 {
                 font-size: 1.2rem;
             }
+                 .card-content p {
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        /* 卡片對齊：統一標題和描述高度 */
+        .card-content h3 {
+            height: 2.4em; /* 固定2行高度 */
+            line-height: 1.2;
+            overflow: hidden;
+            margin-bottom: 0.8rem;
+        }
+        
+        .card-content p {
+            height: 5.6em; /* 固定4行高度 */
+            line-height: 1.4;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        /* 針對手機版調整 */
+        @media (max-width: 375px) {
+            .card-content h3 {
+                height: 2.4em; /* 保持固定高度 */
+            }
             
             .card-content p {
-                font-size: 0.85rem;
-                margin-bottom: 0.8rem;
+                height: 4.76em; /* 根據較小字體調整高度 */
             }
+        }
         }
         
         .pagination button:hover {
@@ -246,6 +298,31 @@
         .page-info {
             color: var(--text-color);
             font-weight: 500;
+        }
+        
+        /* 單張卡片的三欄布局樣式 */
+        .single-card-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            justify-items: start;
+        }
+        
+        .single-card-container .card {
+            grid-column: 1;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        @media (max-width: 768px) {
+            .single-card-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .single-card-container .card {
+                grid-column: 1;
+            }
         }
         
         /* 圖片載入改善 */
@@ -273,15 +350,6 @@
             background-repeat: no-repeat;
             background-position: center;
             background-size: contain;
-        }
-
-        /* 隱藏頁面 */
-        .page {
-            display: none;
-        }
-        
-        .page.active {
-            display: block;
         }
 
         @media (max-width: 768px) {
@@ -315,166 +383,199 @@
 
         <!-- 活動卡片區域 -->
         <section class="cards-section container">
-            <!-- 第一頁 -->
-            <div class="page active" id="page1">
-                <div class="cards-grid">
-                    <!-- 豪華帳篷 -->
+            <!-- 一泊二食服務 -->
+            <div class="category-section" id="meal-package">
+                <h2 class="category-title">一泊二食服務</h2>
+                <div class="single-card-container">
+                    <!-- 花蓮海放你基地露營 -->
                     <div class="card">
                         <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="豪華帳篷" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="花蓮海放你基地露營" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
                         </div>
                         <div class="card-content">
-                            <h3>豪華露營帳篷 (4-6人)</h3>
-                            <p>防水、防風、透氣性佳的高品質帳篷，含有客廳區與睡眠區，附贈地席與營釘，安裝簡便。</p>
+                            <h3>花蓮海放你基地露營</h3>
+                            <p>花蓮豐濱面海第一排免搭帳神殿帳露營體驗，由阿美族營主經營。提供完整帳篷設備、一泊二食，可體驗原住民文化、品嚐小米酒，欣賞海景日出與星空。寵物友善，適合家庭團體露營。</p>
                             <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
-                                <a href="#details" class="camp-btn secondary">$1200/天</a>
+                                <a href="https://www.klook.com/zh-TW/activity/74286-glamping-hualien-camping/" target="_blank" class="camp-btn add-cart">立即預訂</a>
+                                <span class="price">NT$ 2,520 起</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 睡袋 -->
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="睡袋" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...'; console.log('睡袋圖片載入失敗');">
-                        </div>
-                        <div class="card-content">
-                            <h3>舒適保暖睡袋</h3>
-                            <p>適合三季使用的高品質睡袋，保暖舒適，輕巧便攜，可機洗，每次使用後均進行專業消毒。</p>
-                            <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
-                                <a href="#details" class="camp-btn secondary">$350/天</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 野炊用具 -->
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="野炊用具" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
-                        </div>
-                        <div class="card-content">
-                            <h3>戶外野炊套裝</h3>
-                            <p>包含便攜式爐具、燃料、不鏽鋼炊具組、餐具組等，適合戶外烹飪使用，安全且便於攜帶。</p>
-                            <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
-                                <a href="#details" class="camp-btn secondary">$680/天</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 露營燈具 -->
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="露營燈具" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
-                        </div>
-                        <div class="card-content">
-                            <h3>LED露營燈具組</h3>
-                            <p>含營地主燈、帳篷內部燈、頭燈等，亮度可調節，省電耐用，附充電電池，提供整晚照明需求。</p>
-                            <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
-                                <a href="#details" class="camp-btn secondary">$450/天</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 折疊桌椅 -->
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="折疊桌椅" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
-                        </div>
-                        <div class="card-content">
-                            <h3>戶外摺疊桌椅組</h3>
-                            <p>輕量化鋁合金材質，便於攜帶，穩固耐用，含1張摺疊桌和4張摺疊椅，適合野餐、露營使用。</p>
-                            <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
-                                <a href="#details" class="camp-btn secondary">$580/天</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 便攜冰箱 -->
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="便攜冰箱" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
-                        </div>
-                        <div class="card-content">
-                            <h3>戶外便攜冰箱</h3>
-                            <p>超強保冷效果，可保持食物新鮮，適合短期露營使用，容量適中，附有便利提手，堅固耐用。</p>
-                            <div class="price-info">
-                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
-                                <a href="#details" class="camp-btn secondary">$520/天</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <!-- 第二頁 -->
-            <div class="page" id="page2">
+            <!-- 帳篷租借服務 -->
+            <div class="category-section" id="tents">
+                <h2 class="category-title">帳篷租借服務</h2>
                 <div class="cards-grid">
-                    <!-- 這裡之後可以添加更多租借裝備 -->
+                    <!-- 豪華家庭帳 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="豪華家庭帳" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>豪華家庭帳 (4-6人)</h3>
+                            <p>防水係數3000mm，雙層設計，含客廳區與睡眠區，快速搭建系統，附地席、營釘及收納袋。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
+                                <span class="price">$1,200/天</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 輕量登山帳 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1487730116645-74489c95b41b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="輕量登山帳" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>輕量登山帳 (2-3人)</h3>
+                            <p>僅重2.5kg，適合背包客與登山者，抗風耐用，快速組裝，含防潮墊與壓縮收納袋。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
+                                <span class="price">$800/天</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 快搭天幕帳 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1515408320194-59643816c5b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="快搭天幕帳" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>快搭天幕帳 (6-8人)</h3>
+                            <p>超大空間設計，適合團體聚會，一鍵快速搭建，抗UV材質，含LED燈串與桌椅組合。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即租借</a>
+                                <span class="price">$1,500/天</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- 露營車住宿服務 -->
+            <div class="category-section" id="rv">
+                <h2 class="category-title">露營車住宿服務</h2>
+                <div class="cards-grid">
+                    <!-- 豪華露營車 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="豪華露營車" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>豪華露營車 (4-6人)</h3>
+                            <p>五星級露營體驗，含冷暖氣、獨立衛浴、小廚房、雙人床與沙發床，24小時熱水供應。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即預訂</a>
+                                <span class="price">$4,500/晚</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 親子露營車 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1503435824048-a799a3a84bf7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="親子露營車" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>親子露營車 (4-8人)</h3>
+                            <p>專為親子設計，上下舖床位，兒童安全設施，遊戲區域，含嬰兒床與兒童餐具。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即預訂</a>
+                                <span class="price">$3,800/晚</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 情侶露營車 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="情侶露營車" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>浪漫情侶露營車 (2人)</h3>
+                            <p>浪漫雙人空間，天窗觀星設計，香檳冰桶，玫瑰花瓣佈置，適合求婚、紀念日等特殊時刻。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即預訂</a>
+                                <span class="price">$5,200/晚</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- 客製化包場服務 -->
+            <div class="category-section" id="custom">
+                <h2 class="category-title">客製化包場服務</h2>
+                <div class="cards-grid">
+                    <!-- 企業團建包場 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="企業團建包場" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>企業團建包場 (50-100人)</h3>
+                            <p>專業團建活動規劃，含住宿、餐飲、活動設備，專業主持人，客製化活動流程設計。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即諮詢</a>
+                                <span class="price">客製報價</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 婚禮慶典包場 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="婚禮慶典包場" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>戶外婚禮包場 (30-80人)</h3>
+                            <p>浪漫戶外婚禮，含場地佈置、音響設備、燈光效果、餐飲服務，專業婚禮顧問全程協助。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即諮詢</a>
+                                <span class="price">客製報價</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 生日派對包場 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="生日派對包場" loading="lazy" onerror="this.style.backgroundColor='#f0f0f0'; this.style.border='2px solid #ddd'; this.alt='圖片載入中...';">
+                        </div>
+                        <div class="card-content">
+                            <h3>生日派對包場 (20-50人)</h3>
+                            <p>客製化生日主題佈置，含蛋糕、氣球、遊戲設施，專業攝影師，為您留下美好回憶。</p>
+                            <div class="price-info">
+                                <a href="tel:0979116598" class="camp-btn add-cart">立即諮詢</a>
+                                <span class="price">客製報價</span>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
 
             <!-- 分頁控制 -->
-            <div class="pagination">
-                <button onclick="previousPage()" id="prevBtn">
-                    <i class="fas fa-chevron-left"></i> 上一頁
-                </button>
-                <span class="page-info">
-                    <span id="currentPage">1</span> / <span id="totalPages">1</span>
-                </span>
-                <button onclick="nextPage()" id="nextBtn">
-                    下一頁 <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
+            <!-- 分頁控制已移除，改用分類導航 -->
         </section>
 
         <script>
-            let currentPageNum = 1;
-            const totalPagesNum = 1;
-
-            function showPage(pageNum) {
-                // 隱藏所有頁面
-                document.querySelectorAll('.page').forEach(page => {
-                    page.classList.remove('active');
-                });
-                
-                // 顯示指定頁面
-                document.getElementById('page' + pageNum).classList.add('active');
-                
-                // 更新分頁資訊
-                document.getElementById('currentPage').textContent = pageNum;
-                currentPageNum = pageNum;
-                
-                // 更新按鈕狀態
-                document.getElementById('prevBtn').disabled = pageNum === 1;
-                document.getElementById('nextBtn').disabled = pageNum === totalPagesNum;
-            }
-
-            function nextPage() {
-                if (currentPageNum < totalPagesNum) {
-                    showPage(currentPageNum + 1);
-                }
-            }
-
-            function previousPage() {
-                if (currentPageNum > 1) {
-                    showPage(currentPageNum - 1);
-                }
-            }
-
-            // 初始化
-            showPage(1);
-            
-            // 添加圖片載入錯誤處理
+            // 頁面載入時初始化
             document.addEventListener('DOMContentLoaded', function() {
+                // 添加圖片載入錯誤處理
                 const images = document.querySelectorAll('.card-image img');
                 images.forEach(img => {
                     img.addEventListener('error', function() {
                         console.warn('圖片載入失敗:', this.src);
-                        // 如果圖片載入失敗，使用佔位圖
                         this.style.backgroundColor = '#f0f0f0';
                         this.style.border = '2px solid #ddd';
                         this.alt = '圖片暫時無法顯示';

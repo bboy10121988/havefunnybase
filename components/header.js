@@ -9,7 +9,8 @@ class AppHeader extends HTMLElement {
             <div class="main-banner">
                 <div class="banner-overlay">
                     <div class="banner-content">
-                        <h1>海放你基地</h1>
+                        <img src="images/logo.jpg" alt="海放你基地 Logo" class="header-logo">
+                        <h1 class="hero-title">海放你基地</h1>
                         <p>體驗大自然的美麗，留下難忘的露營回憶</p>
                     </div>
                 </div>
@@ -79,7 +80,7 @@ class AppHeader extends HTMLElement {
                     width: 100%;
                     aspect-ratio: 4/3;
                     max-height: 600px; /* 限制最大高度 */
-                    background-image: url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+                    background-image: url('../images/Main-banner01.webp');
                     background-size: cover;
                     background-position: center;
                     background-repeat: no-repeat;
@@ -110,13 +111,13 @@ class AppHeader extends HTMLElement {
                 .banner-content {
                     text-align: center;
                     color: white;
-                    padding: 2rem;
+                    padding: 0.5rem;
                     max-width: 800px;
                 }
 
                 .banner-content h1 {
                     font-size: 3.5rem;
-                    margin-bottom: 1rem;
+                    margin: 0 0 1rem 0;
                     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
                 }
 
@@ -124,6 +125,29 @@ class AppHeader extends HTMLElement {
                     font-size: 1.5rem;
                     margin-bottom: 1.5rem;
                     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+                }
+
+                /* Logo 樣式 */
+                .logo-container {
+                    margin: 0;
+                    padding: 0;
+                    text-align: center;
+                }
+
+                .header-logo {
+                    width: 220px;
+                    height: 220px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    border: 4px solid white;
+                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                    transition: transform 0.3s ease;
+                    margin: 0 auto 1.5rem auto;
+                    display: block;
+                }
+
+                .header-logo:hover {
+                    transform: scale(1.05);
                 }
 
                 /* 懸浮按鈕容器 */
@@ -331,6 +355,28 @@ class AppHeader extends HTMLElement {
                         display: flex;
                     }
 
+                    /* 手機版隱藏標題，只顯示副標題 */
+                    .hero-title {
+                        display: none;
+                    }
+
+                    /* 手機版 logo 樣式 */
+                    .header-logo {
+                        width: 140px;
+                        height: 140px;
+                        margin: 0 auto 1rem auto;
+                    }
+
+                    .logo-container {
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    .banner-content p {
+                        font-size: 1.2rem;
+                        margin-bottom: 1rem;
+                    }
+
                     /* 為底部懸浮按鈕預留空間 */
                     body {
                         padding-bottom: calc(16px * 2 + 48px);
@@ -338,6 +384,24 @@ class AppHeader extends HTMLElement {
                 }
 
                 @media (max-width: 480px) {
+                    /* 更小螢幕的 logo 樣式 */
+                    .header-logo {
+                        width: 100px;
+                        height: 100px;
+                        border: 3px solid white;
+                        margin: 0 auto 1rem auto;
+                    }
+
+                    .logo-container {
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    .banner-content p {
+                        font-size: 1rem;
+                        margin-bottom: 1rem;
+                    }
+
                     .mobile-floating-buttons {
                         padding: 12px;
                         gap: 8px;
