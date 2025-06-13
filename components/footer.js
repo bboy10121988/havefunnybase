@@ -91,6 +91,92 @@ class AppFooter extends HTMLElement {
           border-top: 1px solid rgba(255,255,255,0.1);
         }
         
+        /* 聯繫表單區塊樣式 */
+        .contact-form-section {
+          background-color: #fff;
+          padding: 4rem 0;
+          margin-bottom: 0;
+        }
+
+        .contact-form-container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 0 1rem;
+        }
+
+        .contact-form-header {
+          text-align: center;
+          margin-bottom: 2.5rem;
+        }
+
+        .contact-form-header h2 {
+          color: #002F43;
+          font-size: 2rem;
+          margin-bottom: 1rem;
+        }
+
+        .contact-form-header p {
+          color: #666;
+          font-size: 1.1rem;
+        }
+
+        .contact-form {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
+        }
+
+        .form-group {
+          margin-bottom: 1rem;
+        }
+
+        .form-group.full-width {
+          grid-column: 1 / -1;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+          width: 100%;
+          padding: 0.8rem;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          font-size: 1rem;
+          transition: border-color 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+          border-color: #002F43;
+          outline: none;
+        }
+
+        .contact-form textarea {
+          height: 150px;
+          resize: vertical;
+        }
+
+        .submit-button {
+          grid-column: 1 / -1;
+          background-color: #002F43;
+          color: #fff;
+          border: none;
+          padding: 1rem 2rem;
+          font-size: 1.1rem;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+          background-color: #004c6d;
+        }
+
+        @media (max-width: 768px) {
+          .contact-form {
+            grid-template-columns: 1fr;
+          }
+        }
+
         /* 手機版響應式設計 */
         @media (max-width: 768px) {
           .footer-content {
@@ -149,7 +235,37 @@ class AppFooter extends HTMLElement {
           }
         }
       </style>
-        <footer class="site-footer">
+
+      <!-- 聯繫表單區塊 -->
+      <section class="contact-form-section" id="contact">
+        <div class="contact-form-container">
+          <div class="contact-form-header">
+            <h2>聯繫我們</h2>
+            <p>有任何問題或建議，歡迎填寫以下表單與我們聯繫</p>
+          </div>
+          <form class="contact-form" id="contactForm">
+            <div class="form-group">
+              <input type="text" id="name" name="name" placeholder="您的姓名" required>
+            </div>
+            <div class="form-group">
+              <input type="tel" id="phone" name="phone" placeholder="聯絡電話" required>
+            </div>
+            <div class="form-group">
+              <input type="email" id="email" name="email" placeholder="電子郵件" required>
+            </div>
+            <div class="form-group">
+              <input type="text" id="subject" name="subject" placeholder="主旨" required>
+            </div>
+            <div class="form-group full-width">
+              <textarea id="message" name="message" placeholder="請輸入您的訊息" required></textarea>
+            </div>
+            <button type="submit" class="submit-button">送出訊息</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- 原有的 footer -->
+      <footer class="site-footer">
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">          <h4>關於海放你</h4>
@@ -186,7 +302,7 @@ class AppFooter extends HTMLElement {
           <div class="social-links">
             <a href="https://www.facebook.com/Havefunnybase/" class="social-link" target="_blank"><i class="fab fa-facebook"></i></a>
             <a href="https://www.instagram.com/havefunnybase/" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://line.me/" class="social-link" target="_blank"><i class="fab fa-line"></i></a>
+            <a href="https://line.me/R/ti/p/@havefunnybase" class="social-link" target="_blank"><i class="fab fa-line"></i></a>
           </div>
         </div>
       </div>
@@ -197,6 +313,20 @@ class AppFooter extends HTMLElement {
     </div>
   </footer>
     `;
+
+    // 添加表單提交處理
+    const form = this.querySelector('#contactForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // 這裡可以添加表單提交的處理邏輯，例如：
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      
+      // 暫時用 alert 顯示成功訊息
+      alert('感謝您的來信！我們會盡快回覆。');
+      form.reset();
+    });
   }
 }
 

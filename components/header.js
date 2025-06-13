@@ -23,7 +23,7 @@ class AppHeader extends HTMLElement {
             <div class="floating-buttons">
                 <!-- 桌機版 - 右側懸浮按鈕 -->
                 <div class="desktop-floating-buttons">
-                    <a href="https://line.me/ti/p/YOUR_LINE_ID" target="_blank" class="floating-btn line-btn">
+                    <a href="https://line.me/R/ti/p/@havefunnybase" target="_blank" class="floating-btn line-btn">
                         <div class="btn-icon">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M22 10.6C22 5.9 17.5 2 12 2C6.5 2 2 5.9 2 10.6C2 14.9 5.4 18.3 9.9 19.4C10.2 19.5 10.6 19.7 10.7 20C10.8 20.3 10.7 20.8 10.7 21.1C10.7 21.1 10.6 21.8 10.6 22C10.6 22.3 10.8 22.6 11.2 22.5C11.6 22.4 16.1 19.7 18.8 17.4C20.6 15.9 22 13.4 22 10.6Z" fill="currentColor"/>
@@ -43,7 +43,7 @@ class AppHeader extends HTMLElement {
 
                 <!-- 手機版 - 底部懸浮按鈕 -->
                 <div class="mobile-floating-buttons">
-                    <a href="https://line.me/ti/p/YOUR_LINE_ID" target="_blank" class="mobile-btn line-btn">
+                    <a href="https://line.me/R/ti/p/@havefunnybase" target="_blank" class="mobile-btn line-btn">
                         <div class="btn-icon">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M22 10.6C22 5.9 17.5 2 12 2C6.5 2 2 5.9 2 10.6C2 14.9 5.4 18.3 9.9 19.4C10.2 19.5 10.6 19.7 10.7 20C10.8 20.3 10.7 20.8 10.7 21.1C10.7 21.1 10.6 21.8 10.6 22C10.6 22.3 10.8 22.6 11.2 22.5C11.6 22.4 16.1 19.7 18.8 17.4C20.6 15.9 22 13.4 22 10.6Z" fill="currentColor"/>

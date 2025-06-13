@@ -31,7 +31,7 @@ class Navigation extends HTMLElement {
                         <li><a href="rental.html">海放你基地</a></li>
                         <li><a href="plan.html">海放計畫</a></li>
                         <li><a href="kids-camp.html">海放兒童營隊</a></li>
-                        <li><a href="tel:0979116598" class="cta-button">聯繫我們</a></li>
+                        <li><a href="#contact" class="cta-button">聯繫我們</a></li>
                     </ul>
                 </nav>
             </div>
@@ -47,7 +47,7 @@ class Navigation extends HTMLElement {
                     <li><a href="rental.html">海放你基地</a></li>
                     <li><a href="plan.html">海放計畫</a></li>
                     <li><a href="kids-camp.html">海放兒童營隊</a></li>
-                    <li><a href="tel:0979116598" class="cta-button">聯繫我們</a></li>
+                    <li><a href="#contact" class="cta-button">聯繫我們</a></li>
                 </ul>
             </div>
 
@@ -348,6 +348,24 @@ class Navigation extends HTMLElement {
                 }
             </style>
         `;
+
+        // 添加事件監聽器
+        const contactLinks = this.querySelectorAll('a[href="#contact"]');
+        contactLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const contactSection = document.querySelector('#contact');
+                if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // 如果在手機版，點擊後關閉側邊選單
+                    const mobileSidebar = document.querySelector('.mobile-sidebar');
+                    if (mobileSidebar && mobileSidebar.classList.contains('active')) {
+                        mobileSidebar.classList.remove('active');
+                    }
+                }
+            });
+        });
 
         // 添加事件監聽器
         const hamburgerMenu = this.querySelector('.hamburger-menu');
