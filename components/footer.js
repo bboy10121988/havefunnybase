@@ -1,6 +1,15 @@
 class AppFooter extends HTMLElement {
   constructor() {
     super();
+    
+    // 載入 EmailJS SDK
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      emailjs.init("RaXYVegN1cwR8GKMH");
+    };
   }
 
   connectedCallback() {
@@ -316,16 +325,57 @@ class AppFooter extends HTMLElement {
 
     // 添加表單提交處理
     const form = this.querySelector('#contactForm');
-    form.addEventListener('submit', (e) => {
+    const submitButton = form.querySelector('.submit-button');
+    
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      // 這裡可以添加表單提交的處理邏輯，例如：
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
+      // 禁用提交按鈕並顯示載入狀態
+      submitButton.disabled = true;
+      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 發送中...';
       
-      // 暫時用 alert 顯示成功訊息
-      alert('感謝您的來信！我們會盡快回覆。');
-      form.reset();
+      try {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        
+        // 使用 EmailJS 發送郵件
+        await emailjs.send(
+          'service_xxxxxxx', // EmailJS service ID
+          'template_xxxxxxx', // EmailJS template ID
+          {
+            to_email: 'textsece.ai@gmail.com',
+            from_name: data.name,
+            phone: data.phone,
+            from_email: data.email,
+            subject: data.subject,
+            message: data.message
+          }
+        );
+        
+        // 顯示成功訊息
+        submitButton.innerHTML = '<i class="fas fa-check"></i> 發送成功！';
+        submitButton.style.backgroundColor = '#28a745';
+        form.reset();
+        
+        // 3秒後重置按鈕
+        setTimeout(() => {
+          submitButton.disabled = false;
+          submitButton.innerHTML = '送出訊息';
+          submitButton.style.backgroundColor = '';
+        }, 3000);
+        
+      } catch (error) {
+        console.error('發送失敗:', error);
+        submitButton.innerHTML = '<i class="fas fa-exclamation-triangle"></i> 發送失敗';
+        submitButton.style.backgroundColor = '#dc3545';
+        
+        // 3秒後重置按鈕
+        setTimeout(() => {
+          submitButton.disabled = false;
+          submitButton.innerHTML = '送出訊息';
+          submitButton.style.backgroundColor = '';
+        }, 3000);
+      }
     });
   }
 }
