@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps 評論抓取工具</title>
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #002F43;
+        }
+        .instructions {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-height: 200px;
+        }
+        button {
+            background-color: #002F43;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #004f6a;
+        }
+        .reviews-container {
+            margin-top: 30px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .reviews-list {
+            margin-top: 20px;
+        }
+        .review-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .review-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .json-output {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            border: 1px solid #ddd;
+        }
+        .copy-btn {
+            background-color: #4CAF50;
+            margin-top: 10px;
+        }
+        .export-options {
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .tab-buttons {
+            margin-bottom: 20px;
+        }
+        .tab-button {
+            background-color: #ddd;
+            color: #333;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        .tab-button.active {
+            background-color: #002F43;
+            color: white;
+        }
+        .output-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>海放你基地 Google Maps 評論抓取工具</h1>
+    
+    <div class="instructions">
+        <h2>使用說明</h2>
+        <ol>
+            <li>前往 <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/data=!4m11!3m10!1s0x346f532df52c4279:0x6e369ae51c5c2117!5m2!4m1!1i2!8m2!3d23.6131676!4d121.5285056!9m1!1b1!16s%2Fg%2F11pvc3kn3z?entry=ttu" target="_blank">Google Maps - 海放你基地</a></li>
+            <li>滾動到評論區，點擊 "所有評論"</li>
+            <li>用瀏覽器開發者工具（按F12），複製評論區域的HTML</li>
+            <li>貼到下面的文本框中</li>
+            <li>點擊 "分析 HTML" 按鈕</li>
+        </ol>
+    </div>
+    
+    <textarea id="htmlInput" placeholder="貼上從 Google Maps 複製的 HTML 評論區域代碼..."></textarea>
+    <button onclick="analyzeHTML()">分析 HTML</button>
+    
+    <div class="reviews-container hidden" id="reviewsContainer">
+        <h2>分析結果</h2>
+        <p>找到 <span id="reviewCount">0</span> 則評論，平均評分: <span id="averageRating">0.0</span></p>
+        
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="switchTab('preview')">預覽</button>
+            <button class="tab-button" onclick="switchTab('json')">JSON</button>
+            <button class="tab-button" onclick="switchTab('html')">HTML</button>
+        </div>
+        
+        <div class="output-container">
+            <div id="previewTab" class="reviews-list"></div>
+            <div id="jsonTab" class="json-output hidden"></div>
+            <div id="htmlTab" class="json-output hidden"></div>
+        </div>
+        
+        <div class="export-options">
+            <button class="copy-btn" onclick="copyToClipboard('json')">複製 JSON</button>
+            <button class="copy-btn" onclick="copyToClipboard('html')">複製 HTML</button>
+            <button onclick="saveToLocalStorage()">保存到 LocalStorage</button>
+        </div>
+    </div>
+    
+    <script>
+        const defaultAvatars = [
+            "https://images.unsplash.com/photo-1494790108755-2616b612b547?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+            "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+            "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80"
+        ];
+        
+        let extractedReviews = [];
+        
+        function analyzeHTML() {
+            const html = document.getElementById('htmlInput').value;
+            
+            if (!html) {
+                alert('請先貼上 HTML 代碼');
+                return;
+            }
+            
+            try {
+                // 創建臨時 DOM 元素來解析 HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // 尋找評論元素
+                // Google Maps 評論通常在特定的結構中，但由於 Google 頻繁更改其結構，以下選擇器可能需要調整
+                const reviewElements = doc.querySelectorAll('.jftiEf, .gws-localreviews__google-review');
+                
+                if (reviewElements.length === 0) {
+                    alert('未找到評論。請確保您複製了正確的 HTML 區域，或者更新選擇器以匹配 Google Maps 的當前結構。');
+                    return;
+                }
+                
+                extractedReviews = [];
+                
+                reviewElements.forEach((element, index) => {
+                    try {
+                        // 尋找評論者名稱
+                        const nameElement = element.querySelector('.d4r55, .jxjCjc');
+                        const name = nameElement ? nameElement.textContent.trim() : `評論者 ${index + 1}`;
+                        
+                        // 尋找評論日期
+                        const dateElement = element.querySelector('.rsqaWe, .dehysf');
+                        const date = dateElement ? dateElement.textContent.trim() : '最近';
+                        
+                        // 尋找星級評分
+                        const ratingElement = element.querySelector('[aria-label*="星"], [aria-label*="顆星"], .kvMYJc');
+                        let rating = 5; // 預設值
+                        
+                        if (ratingElement) {
+                            const ratingText = ratingElement.getAttribute('aria-label');
+                            if (ratingText) {
+                                // 從評分文本中提取數字 (例如 "5 顆星" -> 5)
+                                const ratingMatch = ratingText.match(/(\d+)/);
+                                if (ratingMatch) {
+                                    rating = parseInt(ratingMatch[1]);
+                                }
+                            }
+                        }
+                        
+                        // 尋找評論內容
+                        const textElement = element.querySelector('.wiI7pd, .review-full-text');
+                        const text = textElement ? textElement.textContent.trim() : '';
+                        
+                        // 尋找頭像
+                        const avatarElement = element.querySelector('img.d7hztd, img.rISBZc');
+                        let avatar = '';
+                        
+                        if (avatarElement && avatarElement.src) {
+                            avatar = avatarElement.src;
+                        } else {
+                            // 隨機選擇一個預設頭像
+                            avatar = defaultAvatars[Math.floor(Math.random() * defaultAvatars.length)];
+                        }
+                        
+                        if (name && text) {
+                            extractedReviews.push({
+                                name,
+                                date,
+                                rating,
+                                text,
+                                avatar
+                            });
+                        }
+                    } catch (err) {
+                        console.error('處理評論時出錯:', err);
+                    }
+                });
+                
+                renderResults();
+            } catch (err) {
+                console.error('分析 HTML 時出錯:', err);
+                alert('分析 HTML 時出錯: ' + err.message);
+            }
+        }
+        
+        function renderResults() {
+            if (extractedReviews.length === 0) {
+                alert('未能提取任何評論，請檢查 HTML 格式或更新選擇器。');
+                return;
+            }
+            
+            // 顯示評論容器
+            document.getElementById('reviewsContainer').classList.remove('hidden');
+            
+            // 更新統計數據
+            document.getElementById('reviewCount').textContent = extractedReviews.length;
+            
+            const totalRating = extractedReviews.reduce((sum, review) => sum + review.rating, 0);
+            const averageRating = (totalRating / extractedReviews.length).toFixed(1);
+            document.getElementById('averageRating').textContent = averageRating;
+            
+            // 渲染預覽
+            renderPreview();
+            
+            // 生成 JSON
+            generateJSON();
+            
+            // 生成 HTML
+            generateHTML();
+            
+            // 默認顯示預覽標籤
+            switchTab('preview');
+        }
+        
+        function renderPreview() {
+            const previewContainer = document.getElementById('previewTab');
+            previewContainer.innerHTML = '';
+            
+            extractedReviews.forEach(review => {
+                const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+                
+                const reviewEl = document.createElement('div');
+                reviewEl.className = 'review-item';
+                reviewEl.innerHTML = `
+                    <div class="review-header">
+                        <img src="${review.avatar}" alt="${review.name}">
+                        <div>
+                            <h3>${review.name}</h3>
+                            <p>${review.date} · ${stars}</p>
+                        </div>
+                    </div>
+                    <div class="review-content">${review.text}</div>
+                `;
+                
+                previewContainer.appendChild(reviewEl);
+            });
+        }
+        
+        function generateJSON() {
+            const json = JSON.stringify(extractedReviews, null, 2);
+            document.getElementById('jsonTab').textContent = json;
+        }
+        
+        function generateHTML() {
+            // 計算平均評分
+            const totalRating = extractedReviews.reduce((sum, review) => sum + review.rating, 0);
+            const averageRating = (totalRating / extractedReviews.length).toFixed(1);
+            
+            // 生成評論卡片 HTML
+            let reviewCardsHTML = '';
+            extractedReviews.forEach(review => {
+                // 根據評分生成星星
+                const fullStars = review.rating;
+                const emptyStars = 5 - fullStars;
+                let starsHTML = '';
+                
+                for (let i = 0; i < fullStars; i++) {
+                    starsHTML += '<i class="fas fa-star"></i>';
+                }
+                
+                for (let i = 0; i < emptyStars; i++) {
+                    starsHTML += '<i class="far fa-star"></i>';
+                }
+                
+                reviewCardsHTML += `
+<div class="review-card">
+    <div class="review-header">
+        <img src="${review.avatar}" alt="${review.name}" class="reviewer-avatar">
+        <div class="reviewer-info">
+            <h4>${review.name}</h4>
+            <p class="review-date">${review.date}</p>
+        </div>
+    </div>
+    <div class="review-rating">
+        ${starsHTML}
+    </div>
+    <p class="review-text">${review.text}</p>
+    <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/" target="_blank" class="view-on-google">
+        <i class="fab fa-google"></i>
+        View on Google
+    </a>
+</div>`;
+            });
+            
+            // 生成完整的評論區塊 HTML
+            const completeHTML = `
+<div class="reviews-header">
+    <div class="google-logo">
+        <i class="fab fa-google"></i>
+        <span>Google 評論</span>
+    </div>
+    <h2>顧客真實評價</h2>
+    <div class="overall-rating">
+        <span class="rating-score">${averageRating}</span>
+        <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+        </div>
+        <span class="total-reviews">基於 ${extractedReviews.length} 則評論</span>
+    </div>
+</div>
+
+<div class="reviews-masonry">
+${reviewCardsHTML}
+</div>`;
+            
+            document.getElementById('htmlTab').textContent = completeHTML;
+        }
+        
+        function switchTab(tabName) {
+            // 隱藏所有標籤內容
+            document.getElementById('previewTab').classList.add('hidden');
+            document.getElementById('jsonTab').classList.add('hidden');
+            document.getElementById('htmlTab').classList.add('hidden');
+            
+            // 顯示選擇的標籤內容
+            document.getElementById(tabName + 'Tab').classList.remove('hidden');
+            
+            // 更新標籤按鈕狀態
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // 找到並激活當前標籤按鈕
+            const activeButton = Array.from(buttons).find(button => 
+                button.textContent.toLowerCase().includes(tabName)
+            );
+            
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+        }
+        
+        function copyToClipboard(type) {
+            const text = type === 'json' 
+                ? document.getElementById('jsonTab').textContent
+                : document.getElementById('htmlTab').textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`已複製 ${type.toUpperCase()} 到剪貼簿`);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                alert('複製失敗: ' + err.message);
+            });
+        }
+        
+        function saveToLocalStorage() {
+            if (extractedReviews.length === 0) {
+                alert('沒有評論可保存');
+                return;
+            }
+            
+            // 保存到 localStorage
+            localStorage.setItem('googleReviews', JSON.stringify(extractedReviews));
+            alert('評論已保存到 LocalStorage！您現在可以使用 google-reviews-updater 工具查看和編輯它們。');
+        }
+    </script>
+</body>
+</html>

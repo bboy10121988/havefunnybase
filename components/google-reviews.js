@@ -4,6 +4,35 @@ class GoogleReviews extends HTMLElement {
     }
 
     connectedCallback() {
+        // 從 localStorage 獲取已保存的評論
+        const savedReviews = localStorage.getItem('googleReviews');
+        const allReviews = savedReviews ? JSON.parse(savedReviews) : [];
+        
+        // 選擇評分高的最新評論
+        const reviews = allReviews
+            .filter(review => review.rating >= 4) // 只選擇 4 星以上的評論
+            .sort((a, b) => {
+                // 優先考慮評分差異
+                if (b.rating !== a.rating) {
+                    return b.rating - a.rating;
+                }
+                // 如果評分相同，則按日期排序
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateB - dateA; // 較新的評論排在前面
+            })
+            .slice(0, 10); // 只取前 10 筆
+        
+        // 計算平均評分（只算 4 星以上的評論）
+        const highRatedReviews = allReviews.filter(review => review.rating >= 4);
+        let averageRating = "5.0";
+        let reviewCount = highRatedReviews.length.toString();
+        
+        if (highRatedReviews.length > 0) {
+            const totalRating = highRatedReviews.reduce((sum, review) => sum + review.rating, 0);
+            averageRating = (totalRating / highRatedReviews.length).toFixed(1);
+        }
+        
         this.innerHTML = `
             <style>
                 .reviews-section {
@@ -195,246 +224,93 @@ class GoogleReviews extends HTMLElement {
                     <div class="reviews-header">
                         <div class="google-logo">
                             <i class="fab fa-google"></i>
-                            <span>Google 評論</span>
+                            <span>精選評論</span>
                         </div>
-                        <h2>顧客真實評價</h2>
+                        <h2>顧客真實好評</h2>
                         <div class="overall-rating">
-                            <span class="rating-score">4.8</span>
+                            <span class="rating-score">${averageRating}</span>
                             <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                                ${this.generateStars(Math.round(parseFloat(averageRating)))}
                             </div>
-                            <span class="total-reviews">基於 127 則評論</span>
+                            <span class="total-reviews">精選 ${reviewCount} 則評論</span>
                         </div>
+                        <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/data=!4m11!3m10!1s0x346f532df52c4279:0x6e369ae51c5c2117!5m2!4m1!1i2!8m2!3d23.6131676!4d121.5285056!9m1!1b1!16s%2Fg%2F11pvc3kn3z?entry=ttu" 
+                           target="_blank" 
+                           style="color: #4285f4; text-decoration: none; font-size: 0.9em; display: inline-block; margin-top: 10px;">
+                            查看所有評論 <i class="fas fa-external-link-alt"></i>
+                        </a>
                     </div>
                     
                     <div class="reviews-masonry">
-                        <div class="review-card">
-                            <div class="review-header">
-                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b547?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="王小美" class="reviewer-avatar">
-                                <div class="reviewer-info">
-                                    <h4>王小美</h4>
-                                    <p class="review-date">3 週前</p>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">海放你基地真的太棒了！設施很完善，工作人員超級友善，海景更是美得讓人窒息。孩子們玩得超開心，我們全家都愛上這裡了！</p>
-                            <a href="https://www.google.com/maps/place/海放你基地" target="_blank" class="view-on-google">
-                                <i class="fab fa-google"></i>
-                                View on Google
-                            </a>
-                        </div>
-                        
-                        <div class="review-card">
-                            <div class="review-header">
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="李大明" class="reviewer-avatar">
-                                <div class="reviewer-info">
-                                    <h4>李大明</h4>
-                                    <p class="review-date">1 個月前</p>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">第一次帶家人來露營，選擇海放你基地真是明智的決定！租借的帳篷品質很好，晚上聽著海浪聲入睡，早上看著日出，太浪漫了！</p>
-                            <a href="https://www.google.com/maps/place/海放你基地" target="_blank" class="view-on-google">
-                                <i class="fab fa-google"></i>
-                                View on Google
-                            </a>
-                        </div>
-                        
-                        <div class="review-card">
-                            <div class="review-header">
-                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="陳美玲" class="reviewer-avatar">
-                                <div class="reviewer-info">
-                                    <h4>陳美玲</h4>
-                                    <p class="review-date">2 週前</p>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">參加了兒童營隊，孩子學到很多戶外知識，教練們都很專業又有耐心。營區環境乾淨整潔，安全措施也做得很好，讓家長很放心！</p>
-                            <a href="https://www.google.com/maps/place/海放你基地" target="_blank" class="view-on-google">
-                                <i class="fab fa-google"></i>
-                                View on Google
-                            </a>
-                        </div>
-                        
-                        <div class="review-card">
-                            <div class="review-header">
-                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="張志強" class="reviewer-avatar">
-                                <div class="reviewer-info">
-                                    <h4>張志強</h4>
-                                    <p class="review-date">3 天前</p>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">露營車住宿體驗超棒！設備齊全，冷暖氣很舒適，還有獨立衛浴。窗外就是無敵海景，CP值超高！已經預訂下次的行程了。</p>
-                            <a href="https://www.google.com/maps/place/海放你基地" target="_blank" class="view-on-google">
-                                <i class="fab fa-google"></i>
-                                View on Google
-                            </a>
-                        </div>
-                        
-                        <div class="review-card">
-                            <div class="review-header">
-                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="林雅雯" class="reviewer-avatar">
-                                <div class="reviewer-info">
-                                    <h4>林雅雯</h4>
-                                    <p class="review-date">1 週前</p>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">公司團建活動選擇這裡太棒了！客製化包場服務很貼心，BBQ設備齊全，大家玩得很開心。工作人員協助度很高，推薦給其他公司！</p>
-                            <a href="https://www.google.com/maps/place/海放你基地" target="_blank" class="view-on-google">
-                                <i class="fab fa-google"></i>
-                                View on Google
-                            </a>
-                        </div>
-                        
-                        <div class="review-card">
-                            <div class="review-header">
-                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="黃建華" class="reviewer-avatar">
-                                <div class="reviewer-info">
-                                    <h4>黃建華</h4>
-                                    <p class="review-date">5 天前</p>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
-                            </div>
-                            <p class="review-text">一泊二食的服務很不錯，食物品質超出預期！海鮮很新鮮，BBQ設備也很好用。唯一小建議是希望能增加更多蔬食選項。</p>
-                            <a href="https://www.google.com/maps/place/海放你基地" target="_blank" class="view-on-google">
-                                <i class="fab fa-google"></i>
-                                View on Google
-                            </a>
-                        </div>
-                        
-                        <div class="review-card">
-                            <div class="review-header">
-                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="吳佩君" class="reviewer-avatar">
-                                <div class="reviewer-info">
-                                    <h4>吳佩君</h4>
-                                    <p class="review-date">2 個月前</p>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">帶父母來這裡度假，他們很喜歡這裡的環境。工作人員對長輩很照顧，設施對老人家來說也很友善。下次還會再來！</p>
-                            <a href="https://www.google.com/maps/place/海放你基地" target="_blank" class="view-on-google">
-                                <i class="fab fa-google"></i>
-                                View on Google
-                            </a>
-                        </div>
-                        
-                        <div class="review-card">
-                            <div class="review-header">
-                                <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="劉家豪" class="reviewer-avatar">
-                                <div class="reviewer-info">
-                                    <h4>劉家豪</h4>
-                                    <p class="review-date">4 天前</p>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">朋友聚會選擇這裡真的很棒！海景第一排的位置太美了，拍照效果一流。租借的設備都很新，服務人員也很熱心協助。</p>
-                            <a href="https://www.google.com/maps/place/海放你基地" target="_blank" class="view-on-google">
-                                <i class="fab fa-google"></i>
-                                View on Google
-                            </a>
-                        </div>
-                        
-                        <div class="review-card">
-                            <div class="review-header">
-                                <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="許雅婷" class="reviewer-avatar">
-                                <div class="reviewer-info">
-                                    <h4>許雅婷</h4>
-                                    <p class="review-date">1 個月前</p>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">第一次露營就選對地方了！工作人員教我們怎麼搭帳篷，很有耐心。晚上的營火活動很溫馨，讓我們留下美好回憶。強烈推薦給新手露營者！</p>
-                            <a href="https://www.google.com/maps/place/海放你基地" target="_blank" class="view-on-google">
-                                <i class="fab fa-google"></i>
-                                View on Google
-                            </a>
-                        </div>
-                        
-                        <div class="review-card">
-                            <div class="review-header">
-                                <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="鄭大衛" class="reviewer-avatar">
-                                <div class="reviewer-info">
-                                    <h4>鄭大衛</h4>
-                                    <p class="review-date">6 天前</p>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">海放計畫的課程內容很豐富，學到很多實用的戶外技能。教練很專業，安全措施也做得很好。推薦給想要挑戰自己的朋友們！</p>
-                            <a href="https://www.google.com/maps/place/海放你基地" target="_blank" class="view-on-google">
-                                <i class="fab fa-google"></i>
-                                View on Google
-                            </a>
-                        </div>
+                        ${this.renderReviews(reviews)}
                     </div>
                 </div>
             </section>
         `;
+    }
+
+    generateStars(rating) {
+        return Array(5).fill(0).map((_, i) => 
+            `<i class="fas fa-star" style="color: ${i < rating ? '#ffc107' : '#e4e5e9'}"></i>`
+        ).join('');
+    }
+
+    formatDate(dateStr) {
+        const date = new Date(dateStr);
+        const now = new Date();
+        const diff = now - date;
+        
+        // 如果是一天內的評論
+        if (diff < 24 * 60 * 60 * 1000) {
+            const hours = Math.floor(diff / (60 * 60 * 1000));
+            if (hours < 1) return '剛剛';
+            return `${hours} 小時前`;
+        }
+        
+        // 如果是一周內的評論
+        if (diff < 7 * 24 * 60 * 60 * 1000) {
+            const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+            return `${days} 天前`;
+        }
+        
+        // 其他情況，顯示完整日期
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        return `${year}年${month}月${day}日`;
+    }
+
+    renderReviews(reviews) {
+        if (!reviews || reviews.length === 0) {
+            return '<p style="text-align: center; color: #666;">目前還沒有評論</p>';
+        }
+
+        return reviews.map(review => {
+            const stars = this.generateStars(review.rating);
+            const formattedDate = this.formatDate(review.date);
+            
+            return `
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="${review.avatar}" alt="${review.name}" class="reviewer-avatar">
+                        <div class="reviewer-info">
+                            <h4>${review.name}</h4>
+                            <p class="review-date">${formattedDate}</p>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        ${stars}
+                    </div>
+                    <p class="review-text">${review.text}</p>
+                    <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/data=!4m11!3m10!1s0x346f532df52c4279:0x6e369ae51c5c2117!5m2!4m1!1i2!8m2!3d23.6131676!4d121.5285056!9m1!1b1!16s%2Fg%2F11pvc3kn3z?entry=ttu" 
+                       target="_blank" 
+                       class="view-on-google">
+                        <i class="fab fa-google"></i>
+                        在 Google 上查看
+                    </a>
+                </div>
+            `;
+        }).join('');
     }
 }
 

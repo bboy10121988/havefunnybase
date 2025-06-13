@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>評論更新工具</title>
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+                       <div class="review-card">
+                        <div class="review-header">
+                            <img src="${review.avatar}" alt="${review.name}" class="reviewer-avatar">
+                            <div class="reviewer-info">
+                                <h4>${review.name}</h4>
+                                <p class="review-date">${review.date}</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            ${stars}
+                        </div>
+                        <p class="review-text">${review.text}</p>
+                        <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/data=!4m11!3m10!1s0x346f532df52c4279:0x6e369ae51c5c2117!5m2!4m1!1i2!8m2!3d23.6131676!4d121.5285056!9m1!1b1!16s%2Fg%2F11pvc3kn3z?entry=ttu" target="_blank" class="view-on-google">
+                            <i class="fab fa-google"></i>
+                            在 Google 上查看
+                        </a>
+                    </div>`;ght: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #002F43;
+        }
+        .instructions {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .review-form {
+            margin-bottom: 30px;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #002F43;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #004f6a;
+        }
+        .reviews-container {
+            margin-top: 30px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .reviews-list {
+            margin-top: 20px;
+        }
+        .review-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .review-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .review-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 2px solid #e0e0e0;
+        }
+        .review-content {
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .review-stars {
+            color: #ffc107;
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+        .actions {
+            text-align: right;
+            margin-top: 10px;
+        }
+        .json-output {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>海放你基地 Google 評論更新工具</h1>
+    
+    <div class="instructions">
+        <h2>使用說明</h2>
+        <ol>
+            <li>從 Google Maps 複製評論資訊（姓名、日期、星級、內容）</li>
+            <li>填寫下方表單，並點擊「新增評論」</li>
+            <li>所有評論加好後，點擊「保存評論」按鈕</li>
+            <li>評論會自動保存到瀏覽器，並在網站上顯示</li>
+            <li>如果需要備份，可以點擊「匯出 JSON」或「匯出 HTML」按鈕</li>
+        </ol>
+    </div>
+    
+    <div class="review-form">
+        <h2>新增評論</h2>
+        <input type="text" id="reviewerName" placeholder="評論者姓名" required>
+        <input type="text" id="reviewDate" placeholder="評論日期 (例如: 1 週前)" required>
+        <input type="number" id="rating" placeholder="評分 (1-5)" min="1" max="5" required>
+        <input type="url" id="avatarUrl" placeholder="頭像圖片網址 (可選)">
+        <textarea id="reviewText" rows="5" placeholder="評論內容" required></textarea>
+        <button onclick="addReview()">新增評論</button>
+    </div>
+    
+    <h2>評論預覽</h2>
+    <div>總評分: <span id="averageRating">5.0</span> (基於 <span id="reviewCount">0</span> 則評論)</div>
+    
+    <div class="reviews-container">
+        <div class="reviews-list" id="reviewsList">
+            <!-- 評論會顯示在這裡 -->
+        </div>
+    </div>
+    
+    <button onclick="saveReviews()">保存評論</button>
+    <button onclick="generateJSON()">匯出 JSON</button>
+    <button onclick="generateHTML()">匯出 HTML</button>
+    <div class="json-output" id="jsonOutput"></div>
+    
+    <script>
+        // 從 localStorage 載入已保存的評論
+        let reviews = JSON.parse(localStorage.getItem('googleReviews') || '[]');
+        const defaultAvatars = [
+            "https://images.unsplash.com/photo-1494790108755-2616b612b547?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+            "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+            "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80"
+        ];
+        
+        function addReview() {
+            const name = document.getElementById('reviewerName').value;
+            const date = document.getElementById('reviewDate').value;
+            const rating = parseInt(document.getElementById('rating').value);
+            let avatar = document.getElementById('avatarUrl').value;
+            const text = document.getElementById('reviewText').value;
+            
+            if(!name || !date || !rating || !text) {
+                alert('請填寫必要欄位');
+                return;
+            }
+            
+            if(!avatar) {
+                // 隨機選擇一個預設頭像
+                avatar = defaultAvatars[Math.floor(Math.random() * defaultAvatars.length)];
+            }
+            
+            const review = {
+                name,
+                date,
+                rating,
+                avatar,
+                text
+            };
+            
+            reviews.push(review);
+            renderReviews();
+            resetForm();
+            updateStats();
+        }
+        
+        function renderReviews() {
+            const list = document.getElementById('reviewsList');
+            list.innerHTML = '';
+            
+            reviews.forEach((review, index) => {
+                const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+                
+                const reviewEl = document.createElement('div');
+                reviewEl.className = 'review-item';
+                reviewEl.innerHTML = `
+                    <div class="review-header">
+                        <img src="${review.avatar}" alt="${review.name}">
+                        <div>
+                            <h3>${review.name}</h3>
+                            <p>${review.date} · ${stars}</p>
+                        </div>
+                    </div>
+                    <div class="review-content">${review.text}</div>
+                    <div class="actions">
+                        <button onclick="removeReview(${index})">刪除</button>
+                    </div>
+                `;
+                
+                list.appendChild(reviewEl);
+            });
+        }
+        
+        function resetForm() {
+            document.getElementById('reviewerName').value = '';
+            document.getElementById('reviewDate').value = '';
+            document.getElementById('rating').value = '';
+            document.getElementById('avatarUrl').value = '';
+            document.getElementById('reviewText').value = '';
+        }
+        
+        function removeReview(index) {
+            reviews.splice(index, 1);
+            renderReviews();
+            updateStats();
+        }
+        
+        function updateStats() {
+            const count = reviews.length;
+            document.getElementById('reviewCount').textContent = count;
+            
+            if(count > 0) {
+                const sum = reviews.reduce((total, review) => total + review.rating, 0);
+                const average = sum / count;
+                document.getElementById('averageRating').textContent = average.toFixed(1);
+            } else {
+                document.getElementById('averageRating').textContent = '0.0';
+            }
+        }
+        
+        function generateJSON() {
+            const json = JSON.stringify(reviews, null, 2);
+            document.getElementById('jsonOutput').textContent = json;
+        }
+        
+        function generateHTML() {
+            let html = '';
+            
+            reviews.forEach(review => {
+                const stars = Array(review.rating).fill('<i class="fas fa-star"></i>').join('') + 
+                              Array(5 - review.rating).fill('<i class="far fa-star"></i>').join('');
+                
+                html += `
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="${review.avatar}" alt="${review.name}" class="reviewer-avatar">
+                            <div class="reviewer-info">
+                                <h4>${review.name}</h4>
+                                <p class="review-date">${review.date}</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            ${stars}
+                        </div>
+                        <p class="review-text">${review.text}</p>
+                        <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/data=!4m11!3m10!1s0x346f532df52c4279:0x6e369ae51c5c2117!5m2!4m1!1i2!8m2!3d23.6131676!4d121.5285056!9m1!1b1!16s%2Fg%2F11pvc3kn3z?entry=ttu" target="_blank" class="view-on-google">
+                            <i class="fab fa-google"></i>
+                            在 Google 上查看
+                        </a>
+                    </div>`;
+            });
+            
+            document.getElementById('jsonOutput').textContent = html;
+        }
+
+        // 保存評論到 localStorage
+        function saveReviews() {
+            if (reviews.length === 0) {
+                alert('沒有評論可以保存');
+                return;
+            }
+            
+            try {
+                localStorage.setItem('googleReviews', JSON.stringify(reviews));
+                alert('評論已成功保存！網站將自動顯示這些評論。');
+            } catch (error) {
+                console.error('保存評論時出錯:', error);
+                alert('保存評論時出錯: ' + error.message);
+            }
+        }
+
+        // 初始加載時顯示已保存的評論
+        document.addEventListener('DOMContentLoaded', () => {
+            renderReviews();
+            updateStats();
+        });
+    </script>
+</body>
+</html>
