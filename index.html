@@ -12,16 +12,146 @@
     <!-- Google Maps JavaScript API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places"></script>
     <!-- 自定義腳本 -->
-    <script src="scripts/review-scraper.js" type="text/javascript"></script>
-    <script src="components/google-reviews.js" type="text/javascript"></script>
     <script src="components/nav.js" type="text/javascript"></script>
     <script src="components/header.js" type="text/javascript"></script>
     <script src="components/footer.js" type="text/javascript"></script>
     <script src="components/google-map.js" type="text/javascript"></script>
-    <script src="scripts/review-scraper.js" type="text/javascript"></script>
-    <script src="components/google-reviews.js" type="text/javascript"></script>
     <style>
         /* 這裡可以放首頁特定的樣式 */
+        .reviews-section {
+            padding: 4rem 0;
+            background-color: #f9f9f9;
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .google-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .google-logo i {
+            color: #4285f4;
+        }
+
+        .overall-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .rating-score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .total-reviews {
+            color: #666;
+        }
+
+        .reviews-masonry {
+            column-count: 3;
+            column-gap: 2rem;
+            padding: 0 1rem;
+        }
+
+        @media (max-width: 1200px) {
+            .reviews-masonry {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .reviews-masonry {
+                column-count: 1;
+            }
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            break-inside: avoid;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .review-header {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            filter: blur(4px);
+        }
+
+        .reviewer-avatar:hover {
+            filter: blur(0);
+            transform: scale(1.05);
+        }
+
+        .reviewer-info h4 {
+            margin: 0;
+            color: #333;
+        }
+
+        .reviewer-info .review-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0.2rem 0 0;
+        }
+
+        .review-rating {
+            margin: 0.5rem 0;
+        }
+
+        .review-rating i {
+            color: #ffd700;
+            margin-right: 2px;
+        }
+
+        .review-text {
+            color: #666;
+            line-height: 1.6;
+            margin: 0.5rem 0;
+        }
+
+        .view-on-google {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #4285f4;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .view-on-google:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -70,8 +200,175 @@
         </section>
         
         <!-- Google 評論區塊 -->
-        <google-reviews></google-reviews>
-        
+        <section class="reviews-section">
+            <div class="container">
+                <div class="reviews-header">
+                    <div class="google-logo">
+                        <i class="fab fa-google"></i>
+                        <span>Google 評論</span>
+                    </div>
+                    <h2>顧客真實評價</h2>
+                    <div class="overall-rating">
+                        <span class="rating-score">5.0</span>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="total-reviews">基於 8 則評論</span>
+                    </div>
+                </div>
+                <div class="reviews-masonry">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="陳思怡" class="reviewer-avatar">
+                            <div class="reviewer-info">
+                                <h4>陳*怡</h4>
+                                <p class="review-date">最近</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">海放你基地位於豐濱鄉(台11線上)，通常大家對於露營區🏕️都會抱著非常大的期望跟預設。我想這是旅遊人都會設想的點，但是海放你基地說實話如果要比起其他大型的露營區，海放你基地算小型的。雖然第一次去去但徹底愛上😍因為當你了解老闆們的回鄉故事後會深受感動，對於這地方不會再用都市的眼光來看待，而是有著一個純樸、純淨的感動及眼光。 …</p>
+                        <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/" target="_blank" class="view-on-google">
+                            <i class="fab fa-google"></i>
+                            View on Google
+                        </a>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="Hsin Lu" class="reviewer-avatar">
+                            <div class="reviewer-info">
+                                <h4>Hsin **</h4>
+                                <p class="review-date">最近</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">開幕以來已經去了四五次，每次都覺得營主們真的好熱情、用心經營，雖然不是豪華露營，但準備的餐點總是很豐盛，每一次去營區都比前一次多了一些設備，體驗越來越好！
+真的很喜歡海放，一定一定要再拜訪！
+趁這個地方還沒爆紅到約不到之前，大家快約！</p>
+                        <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/" target="_blank" class="view-on-google">
+                            <i class="fab fa-google"></i>
+                            View on Google
+                        </a>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="白瀚翔" class="reviewer-avatar">
+                            <div class="reviewer-info">
+                                <h4>白*翔</h4>
+                                <p class="review-date">最近</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">五顆心海放你基地與店狗伊努柴柴
+
+晚上入住的時候，帳篷裏外點亮的氣氛燈創造了一種難以言喻的寧靜感🌟 …</p>
+                        <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/" target="_blank" class="view-on-google">
+                            <i class="fab fa-google"></i>
+                            View on Google
+                        </a>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="葉庭維" class="reviewer-avatar">
+                            <div class="reviewer-info">
+                                <h4>葉*維</h4>
+                                <p class="review-date">最近</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">體驗還不錯，老闆很熱情，衛浴很乾淨，熱水跟水壓也很足夠，餐點都不錯吃，肉也夠多，唯獨晚餐的白飯有一點濕黏，稍微可惜</p>
+                        <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/" target="_blank" class="view-on-google">
+                            <i class="fab fa-google"></i>
+                            View on Google
+                        </a>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="陳" class="reviewer-avatar">
+                            <div class="reviewer-info">
+                                <h4>陳</h4>
+                                <p class="review-date">最近</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">跨年跟朋友入住，房間濃濃的腳臭味
+而且衛浴設備也不足夠
+一個帳篷裡有8人入住 …</p>
+                        <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/" target="_blank" class="view-on-google">
+                            <i class="fab fa-google"></i>
+                            View on Google
+                        </a>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="Weinien" class="reviewer-avatar">
+                            <div class="reviewer-info">
+                                <h4>Wei **</h4>
+                                <p class="review-date">最近</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">已二訪海放你基地，風景好氣氛佳，老闆們每次都精心準備食材，只怕客人吃不飽，食物豐富好吃之外，服務更是細心快速解決客人的需求，非常讚的露營體驗，大推推啦！</p>
+                        <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/" target="_blank" class="view-on-google">
+                            <i class="fab fa-google"></i>
+                            View on Google
+                        </a>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="吳人杰" class="reviewer-avatar">
+                            <div class="reviewer-info">
+                                <h4>吳*杰</h4>
+                                <p class="review-date">最近</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">跨年玩的超開心，第一次去帶朋友去，大家都覺得海放氣氛超好，雖然離市區有距離，但營區應有盡有，營主還準備了仙女棒，超推！</p>
+                        <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/" target="_blank" class="view-on-google">
+                            <i class="fab fa-google"></i>
+                            View on Google
+                        </a>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" alt="黃士軒" class="reviewer-avatar">
+                            <div class="reviewer-info">
+                                <h4>黃*軒</h4>
+                                <p class="review-date">最近</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">很放鬆的露營場地
+營地、浴廁乾淨舒適
+擁有海景第一排、晚上也適合看星星</p>
+                        <a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5259307,17z/" target="_blank" class="view-on-google">
+                            <i class="fab fa-google"></i>
+                            View on Google
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- 管理員工具入口 (隱藏) -->
         <div class="admin-tools" style="display: none; text-align: center; padding: 2rem 0;">
             <a href="review-manager.html" class="admin-link" style="color: #666; text-decoration: none; font-size: 0.9rem;">
