@@ -11,7 +11,7 @@ class AppHeader extends HTMLElement {
                     <div class="banner-content">
                         <img src="images/logo.jpg" alt="海放你基地 Logo" class="header-logo">
                         <h1 class="hero-title">海放你基地</h1>
-                        <p>體驗大自然的美麗，留下難忘的露營回憶</p>
+                        <p>我們以「海」為歸屬，以「放」為態度，一切，從「你」的加入開始。與一群返鄉青年，在東海岸一起寫下回憶與故事。</p>
                     </div>
                 </div>
             </div>

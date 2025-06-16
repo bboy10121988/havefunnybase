@@ -26,7 +26,7 @@ class Navigation extends HTMLElement {
                 <!-- 桌面版導航選單 - 置中 -->
                 <nav class="desktop-nav">
                     <ul class="nav-menu">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html?v=<?php echo time(); ?>" onclick="window.location.href='index.html?v=' + new Date().getTime(); return false;">Home</a></li>
                         <li><a href="intro.html">海放你介紹</a></li>
                         <li><a href="rental.html">海放你基地</a></li>
                         <li><a href="plan.html">海放計畫</a></li>
@@ -42,7 +42,7 @@ class Navigation extends HTMLElement {
                     <div class="close-btn">&times;</div>
                 </div>
                 <ul class="mobile-menu">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html?v=<?php echo time(); ?>" onclick="window.location.href='index.html?v=' + new Date().getTime(); return false;">Home</a></li>
                     <li><a href="intro.html">海放你介紹</a></li>
                     <li><a href="rental.html">海放你基地</a></li>
                     <li><a href="plan.html">海放計畫</a></li>
@@ -349,6 +349,15 @@ class Navigation extends HTMLElement {
             </style>
         `;
 
+        // 處理 Home 連結點擊，強制重新載入頁面
+        this.querySelectorAll('a[href^="index.html"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'index.html?v=' + new Date().getTime();
+            });
+        });
+
+        // 添加手機版側邊欄的事件處理
         // 添加事件監聽器
         const contactLinks = this.querySelectorAll('a[href="#contact"]');
         contactLinks.forEach(link => {
