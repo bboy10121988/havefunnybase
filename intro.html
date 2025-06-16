@@ -20,307 +20,148 @@
         
         /* 基礎樣式 */
         .intro-section {
-            margin-bottom: 1.5rem;
-            padding: 1rem 0;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
         }
 
         .intro-section h1 {
             font-size: 3rem;
             color: var(--primary-color);
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .intro-section h2 {
             font-size: 2.2rem;
             color: var(--primary-color);
             margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .intro-section p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             line-height: 1.8;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
             color: var(--text-color);
         }
+        
+        .intro-section .highlight {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
 
-        /* 單文置中樣式 */
-        .center-text {
-            text-align: center;
+        /* 故事文字容器 */
+        .story-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 1.5rem;
         }
-
-        /* 左圖右文佈局 */
-        .left-image-right-text {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .left-image-right-text .image-container {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .left-image-right-text .text-container {
-            flex: 1;
-        }
-
-        /* 右圖左文佈局 */
-        .right-image-left-text {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-            flex-direction: row-reverse;
-        }
-
-        .right-image-left-text .image-container {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .right-image-left-text .text-container {
-            flex: 1;
-        }
-
-        /* 雙圖並列樣式 */
-        .dual-images {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .dual-images .image-container {
-            flex: 1;
-        }
-
-        /* 雙文並列樣式 */
-        .dual-text {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .dual-text .text-container {
-            flex: 1;
-        }
-
-        /* 圖片樣式 */
-        .image-container img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease;
-        }
-
-        .image-container img:hover {
-            transform: scale(1.02);
-        }
-
-        /* 圖片說明 */
-        .image-caption {
-            text-align: center;
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 0.5rem;
+        
+        /* 引言樣式 */
+        .quote-text {
+            font-size: 1.5rem;
             font-style: italic;
+            line-height: 1.6;
+            color: #4A5568;
+            text-align: center;
+            position: relative;
+            padding: 0 2rem;
+            margin: 3rem 0;
         }
-
+        
+        .quote-text:before,
+        .quote-text:after {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .quote-text:before {
+            top: -1.5rem;
+            left: 0;
+        }
+        
+        .quote-text:after {
+            bottom: -3rem;
+            right: 0;
+        }
+        
+        /* 特色段落 */
+        .featured-text {
+            background: linear-gradient(to right, #EBF4FF, #F0F9FF);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* 結尾簽名樣式 */
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 3rem;
+            font-size: 1.1rem;
+            color: #4A5568;
+        }
+        
         /* 響應式設計 */
         @media (max-width: 768px) {
-            .left-image-right-text,
-            .right-image-left-text {
-                flex-direction: column;
-                gap: 2rem;
-            }
-
-            .dual-images,
-            .dual-text {
-                flex-direction: column;
-                gap: 2rem;
-            }
-
             .intro-section h1 {
                 font-size: 2.5rem;
             }
-
+            
             .intro-section h2 {
                 font-size: 1.8rem;
             }
-
-            .image-container img {
-                height: 250px;
+            
+            .intro-section p {
+                font-size: 1.1rem;
+            }
+            
+            .quote-text {
+                font-size: 1.3rem;
+                padding: 0 1.5rem;
             }
         }
 
-        /* 特色列表樣式 */
-        .features-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .features-list li {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary-color);
-            font-size: 1.1rem;
-        }
-
-        .features-list li::before {
-            content: "✓";
-            color: var(--primary-color);
-            font-weight: bold;
-            margin-right: 1rem;
-        }
-
-        /* 引用樣式 */
-        .quote {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            font-style: italic;
-            font-size: 1.2rem;
-            text-align: center;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .quote::before {
-            content: "\201C";
-            font-size: 4rem;
-            color: var(--primary-color);
-            position: absolute;
-            top: -10px;
-            left: 20px;
-        }
     </style>
 </head>
 <body>
     <app-header></app-header>
     <main>
-        <!-- 單文置中 - 標題介紹 -->
         <section class="intro-section">
-            <div class="container center-text">
+            <div class="container">
                 <h1>海放你基地</h1>
-                <p>在花蓮豐濱的美麗海岸線上，我們打造了一個結合自然與文化的特殊空間。這裡不只是露營地，更是一個讓人們重新連結土地、感受生活本質的心靈驛站。</p>
-                <div class="quote">
-                    讓我們一起在這片土地上，找回最純真的快樂與感動
-                </div>
-            </div>
-        </section>
-
-        <!-- 左圖右文 - 我們的理念 -->
-        <section class="intro-section">
-            <div class="container">
-                <div class="left-image-right-text">
-                    <div class="image-container">
-                        <img src="https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="海邊日出美景" loading="lazy">
-                        <div class="image-caption">花蓮豐濱的絕美日出</div>
+                <div class="story-container">
+                    <p class="quote-text">那一年，我們做了一個決定——回到被山海擁抱的東海岸故鄉，尋根與創業。</p>
+                    
+                    <p>我們是一群返鄉的青年，從台北回到花蓮豐濱。2020年12月29日，我們開始用自己的雙手整理土地，2021年5月20日正式動工。經歷一年多的努力與摸索，<span class="highlight">「海放你基地」</span>終於在2022年下半年誕生。</p>
+                    
+                    <p>這裡沒有豪華設備，卻滿載我們對回鄉的熱情與執著。我們打造了一個簡單而純粹的露營場域，邀請大家來這裡體驗野炊、曬太陽、看海、聊天，也傾聽我們關於返鄉、土地與生活的故事。</p>
+                    
+                    <p>這條路從來不輕鬆。我們挺過了疫情，也熬過地震，多次在困境中懷疑是否該繼續走下去——但我們沒有停下來。2023年底，我們迎來新的篇章，推出了<span class="highlight">「海放計畫」-聯誼活動</span> 我們希望可以用我們的方式，讓更多人走進花蓮、走進豐濱的念頭，沒想到打開了全新的可能。</p>
+                    
+                    <p>2025年初也開始新的念想推出了<span class="highlight">「海放兒童營隊」</span>-從露營、文化體驗、戶外活動、聯誼到兒童營隊，一場場活動不僅拉近了人與人之間的距離，也讓我們與你們與這片土地的連結更加深刻。在這裡，——不需要太多安排，就能真正放鬆，重新呼吸，感受風的聲音、光的溫度、海的粼粼、山的釉綠、土地的黏性以及我們的熱情。</p>
+                    
+                    <div class="featured-text">
+                        <p>截至2025年5月，海放已接待超過1,500人次。</p>
+                        <p>我們知道，這只是開始。</p>
                     </div>
-                    <div class="text-container">
-                        <h2>我們的理念</h2>
-                        <p>海放你基地源於對這片土地深深的愛與敬重。我們相信，在快節奏的現代生活中，人們需要一個能夠放慢腳步、重新感受生活美好的地方。</p>
-                        <p>這裡的每一個角落都承載著我們的用心，從選址到規劃，從設施到服務，我們都希望為每一位來訪的朋友提供最真誠、最溫暖的體驗。</p>
-                        <p>我們不只是提供住宿，更希望成為連結人與自然、人與文化的橋樑，讓每個人都能在這裡找到屬於自己的那份寧靜與感動。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 右圖左文 - 基地特色 -->
-        <section class="intro-section">
-            <div class="container">
-                <div class="right-image-left-text">
-                    <div class="image-container">
-                        <img src="https://images.unsplash.com/photo-1571863533956-01c88e79957e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="露營帳篷與營火" loading="lazy">
-                        <div class="image-caption">溫馨的露營氛圍</div>
-                    </div>
-                    <div class="text-container">
-                        <h2>基地特色</h2>
-                        <ul class="features-list">
-                            <li>擁有絕佳海景視野，每日可欣賞壯麗日出</li>
-                            <li>完善的露營設施，包含現代化衛浴與廚房設備</li>
-                            <li>豐富的文化體驗活動，深度認識在地文化</li>
-                            <li>專業的戶外活動規劃，適合各年齡層參與</li>
-                            <li>友善的寵物政策，讓毛小孩也能同行</li>
-                            <li>24小時安全管理，讓您安心享受假期</li>
-                        </ul>
+                    
+                    <p>我們始終相信——</p>
+                    <p>來到海放的每一個人，會在這裡留下屬於自己的片段。</p>
+                    <p>因為這裡，不只是一塊土地，而是一段故事的起點。</p>
+                    
+                    <p>願你來到海放，放下喧囂，擁抱自己。</p>
+                    <p>Have fun, be funny — with us.</p>
+                    
+                    <div class="signature">
+                        <p>這裡是 海放你基地，</p>
+                        <p>也是你未來某天，會想回來的地方。</p>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- 雙圖並列 - 環境展示 -->
-        <section class="intro-section">
-            <div class="container">
-                <h2 style="text-align: center; margin-bottom: 2rem;">環境展示</h2>
-                <div class="dual-images">
-                    <div class="image-container">
-                        <img src="https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="營地全景" loading="lazy">
-                        <div class="image-caption">寬敞的營地空間</div>
-                    </div>
-                    <div class="image-container">
-                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="夜晚星空" loading="lazy">
-                        <div class="image-caption">滿天繁星的夜晚</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 雙文並列 - 服務項目 -->
-        <section class="intro-section">
-            <div class="container">
-                <h2 style="text-align: center; margin-bottom: 2rem;">我們的服務</h2>
-                <div class="dual-text">
-                    <div class="text-container">
-                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">露營服務</h3>
-                        <p>提供多樣化的露營選擇，從基礎營位到豪華露營車，滿足不同需求的露營愛好者。我們的營位都經過精心規劃，確保每個位置都能享受到最佳的景觀與舒適度。</p>
-                        <p>專業的營地管理團隊24小時為您服務，從設備租借到緊急協助，我們都能及時提供支援，讓您的露營體驗更加安心愉快。</p>
-                    </div>
-                    <div class="text-container">
-                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">活動企劃</h3>
-                        <p>我們擁有豐富的活動企劃經驗，無論是家庭聚會、公司團建，還是學校戶外教學，都能為您量身打造最適合的活動方案。</p>
-                        <p>從海洋生態導覽到原住民文化體驗，從日出瑜伽到星空觀測，我們的活動內容豐富多元，讓每一次的到訪都能有全新的發現與感動。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 左圖右文 - 地理位置 -->
-        <section class="intro-section">
-            <div class="container">
-                <div class="left-image-right-text">
-                    <div class="image-container">
-                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="花蓮海岸線" loading="lazy">
-                        <div class="image-caption">花蓮豐濱的美麗海岸線</div>
-                    </div>
-                    <div class="text-container">
-                        <h2>絕佳地理位置</h2>
-                        <p>海放你基地位於花蓮縣豐濱鄉，坐擁台灣東海岸最美的一段海岸線。這裡距離花蓮市區約1小時車程，交通便利卻又遠離塵囂。</p>
-                        <p>基地面向太平洋，背靠海岸山脈，擁有270度的絕美海景視野。無論是日出時分的金光萬丈，還是夜晚時刻的滿天繁星，都能在這裡一覽無遺。</p>
-                        <p><strong>地址：</strong>977004 花蓮縣豐濱鄉永豐路11-5號</p>
-                        <p><a href="https://maps.app.goo.gl/Ufkta9Qk7ofh6qyi6" target="_blank" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">📍 在 Google 地圖中查看</a></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 單文置中 - 結語 -->
-        <section class="intro-section">
-            <div class="container center-text">
-                <h2>來吧，讓我們一起海放</h2>
-                <p>在這個充滿愛與溫暖的地方，每一個日出都是新的開始，每一次營火都是心靈的交流。我們期待與您在海放你基地相遇，一起創造屬於您的美好回憶。</p>
-                <p style="margin-top: 2rem;">
-                    <a href="rental.html" style="background-color: var(--primary-color); color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 30px; font-weight: 600; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(43, 108, 176, 0.3); transition: all 0.3s ease;">立即預約您的海放之旅</a>
-                </p>
             </div>
         </section>
     </main>
