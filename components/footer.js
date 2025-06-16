@@ -100,93 +100,6 @@ class AppFooter extends HTMLElement {
           border-top: 1px solid rgba(255,255,255,0.1);
         }
         
-        /* 聯繫表單區塊樣式 */
-        .contact-form-section {
-          background-color: #fff;
-          padding: 4rem 0;
-          margin-bottom: 0;
-        }
-
-        .contact-form-container {
-          max-width: 800px;
-          margin: 0 auto;
-          padding: 0 1rem;
-        }
-
-        .contact-form-header {
-          text-align: center;
-          margin-bottom: 2.5rem;
-        }
-
-        .contact-form-header h2 {
-          color: #002F43;
-          font-size: 2rem;
-          margin-bottom: 1rem;
-        }
-
-        .contact-form-header p {
-          color: #666;
-          font-size: 1.1rem;
-        }
-
-        .contact-form {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.5rem;
-        }
-
-        .form-group {
-          margin-bottom: 1rem;
-        }
-
-        .form-group.full-width {
-          grid-column: 1 / -1;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-          width: 100%;
-          padding: 0.8rem;
-          border: 1px solid #ddd;
-          border-radius: 8px;
-          font-size: 1rem;
-          transition: border-color 0.3s;
-        }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-          border-color: #002F43;
-          outline: none;
-        }
-
-        .contact-form textarea {
-          height: 150px;
-          resize: vertical;
-        }
-
-        .submit-button {
-          grid-column: 1 / -1;
-          background-color: #002F43;
-          color: #fff;
-          border: none;
-          padding: 1rem 2rem;
-          font-size: 1.1rem;
-          border-radius: 8px;
-          cursor: pointer;
-          transition: background-color 0.3s;
-        }
-
-        .submit-button:hover {
-          background-color: #004c6d;
-        }
-
-        @media (max-width: 768px) {
-          .contact-form {
-            grid-template-columns: 1fr;
-          }
-        }
-
-        /* 手機版響應式設計 */
         @media (max-width: 768px) {
           .footer-content {
             grid-template-columns: 1fr 1fr; /* 第一排：關於海放你、立即預約 */
@@ -245,34 +158,6 @@ class AppFooter extends HTMLElement {
         }
       </style>
 
-      <!-- 聯繫表單區塊 -->
-      <section class="contact-form-section" id="contact">
-        <div class="contact-form-container">
-          <div class="contact-form-header">
-            <h2>聯繫我們</h2>
-            <p>有任何問題或建議，歡迎填寫以下表單與我們聯繫</p>
-          </div>
-          <form class="contact-form" id="contactForm">
-            <div class="form-group">
-              <input type="text" id="name" name="name" placeholder="您的姓名" required>
-            </div>
-            <div class="form-group">
-              <input type="tel" id="phone" name="phone" placeholder="聯絡電話" required>
-            </div>
-            <div class="form-group">
-              <input type="email" id="email" name="email" placeholder="電子郵件" required>
-            </div>
-            <div class="form-group">
-              <input type="text" id="subject" name="subject" placeholder="主旨" required>
-            </div>
-            <div class="form-group full-width">
-              <textarea id="message" name="message" placeholder="請輸入您的訊息" required></textarea>
-            </div>
-            <button type="submit" class="submit-button">送出訊息</button>
-          </form>
-        </div>
-      </section>
-
       <!-- 原有的 footer -->
       <footer class="site-footer">
     <div class="container">
@@ -280,19 +165,18 @@ class AppFooter extends HTMLElement {
         <div class="footer-section">          <h4>關於海放你</h4>
           <ul>
             <li><a href="intro.html">海放你介紹</a></li>
-            <li><a href="location.html">海放你基地</a></li>
+            <li><a href="rental.html">海放你基地</a></li>
             <li><a href="plan.html">海放計畫</a></li>
             <li><a href="kids-camp.html">海放兒童營隊</a></li>
-            <li><a href="shop.html">海放商城</a></li>
           </ul>
         </div>
         
         <div class="footer-section">
           <h4>立即預約</h4>
           <ul>
-            <li><a href="location.html#booking">預約營位</a></li>
-            <li><a href="social.html">報名聯誼</a></li>
-            <li><a href="kids-camp.html#signup">報名營隊</a></li>
+            <li><a href="rental.html">海放你基地</a></li>
+            <li><a href="plan.html">海放計畫</a></li>
+            <li><a href="kids-camp.html">海放兒童營隊</a></li>
           </ul>
         </div>
         
@@ -301,8 +185,8 @@ class AppFooter extends HTMLElement {
           <ul class="contact-info">
             <li><i class="fas fa-building"></i> 海放你基地活動有限公司</li>
             <li><i class="fas fa-phone"></i> 預約專線：0979116598</li>
-            <li><i class="fas fa-envelope"></i> Email：havefunnybase@gmail.com</li>
-            <li><i class="fas fa-map-marker-alt"></i> 花蓮營區：977004花蓮縣豐濱鄉永豐路11-5號</li>
+            <li><i class="fas fa-envelope"></i> Email：<a href="mailto:havefunnybase@gmail.com" style="color: #fff; text-decoration: none;">havefunnybase@gmail.com</a></li>
+            <li><i class="fas fa-map-marker-alt"></i> 花蓮營區：<a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5285056,850m/data=!3m2!1e3!4b1!4m9!3m8!1s0x346f532df52c4279:0x6e369ae51c5c2117!5m2!4m1!1i2!8m2!3d23.6131676!4d121.5285056!16s%2Fg%2F11pvc3kn3z?entry=ttu&g_ep=EgoyMDI1MDYxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="color: #fff; text-decoration: none;">977004花蓮縣豐濱鄉永豐路11-5號</a></li>
           </ul>
         </div>
         
@@ -322,61 +206,6 @@ class AppFooter extends HTMLElement {
     </div>
   </footer>
     `;
-
-    // 添加表單提交處理
-    const form = this.querySelector('#contactForm');
-    const submitButton = form.querySelector('.submit-button');
-    
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      // 禁用提交按鈕並顯示載入狀態
-      submitButton.disabled = true;
-      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 發送中...';
-      
-      try {
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-        
-        // 使用 EmailJS 發送郵件
-        await emailjs.send(
-          'service_xxxxxxx', // EmailJS service ID
-          'template_xxxxxxx', // EmailJS template ID
-          {
-            to_email: 'textsece.ai@gmail.com',
-            from_name: data.name,
-            phone: data.phone,
-            from_email: data.email,
-            subject: data.subject,
-            message: data.message
-          }
-        );
-        
-        // 顯示成功訊息
-        submitButton.innerHTML = '<i class="fas fa-check"></i> 發送成功！';
-        submitButton.style.backgroundColor = '#28a745';
-        form.reset();
-        
-        // 3秒後重置按鈕
-        setTimeout(() => {
-          submitButton.disabled = false;
-          submitButton.innerHTML = '送出訊息';
-          submitButton.style.backgroundColor = '';
-        }, 3000);
-        
-      } catch (error) {
-        console.error('發送失敗:', error);
-        submitButton.innerHTML = '<i class="fas fa-exclamation-triangle"></i> 發送失敗';
-        submitButton.style.backgroundColor = '#dc3545';
-        
-        // 3秒後重置按鈕
-        setTimeout(() => {
-          submitButton.disabled = false;
-          submitButton.innerHTML = '送出訊息';
-          submitButton.style.backgroundColor = '';
-        }, 3000);
-      }
-    });
   }
 }
 
