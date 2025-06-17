@@ -27,10 +27,11 @@ class AppFooter extends HTMLElement {
           margin-top: 4rem;
         }
         .footer-content {
-          max-width: 1200px;
+          max-width: 1300px; /* 增加容器寬度 */
           margin: 0 auto;
+          margin-left: -2rem; /* 向左偏移一點點 */
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          grid-template-columns: repeat(4, 1fr); /* 桌面版四個區域一列 */
           gap: 2rem;
           padding: 0 1rem;
         }
@@ -66,9 +67,47 @@ class AppFooter extends HTMLElement {
         }
         .contact-info {
           margin-top: 1rem;
+          text-align: left; /* 聯絡資訊文字向左對齊 */
         }
         .contact-info p {
           margin: 0.5rem 0;
+        }
+        .contact-info li {
+          max-width: 300px; /* 限制li的最大寬度 */
+          word-wrap: break-word; /* 允許長單詞換行 */
+          overflow-wrap: break-word; /* 確保內容不會溢出 */
+          display: flex; /* 使用flexbox讓圖標和文字對齊 */
+          align-items: flex-start; /* 上對齊 */
+          text-align: left; /* li項目文字向左對齊 */
+          margin-bottom: 0.5rem; /* 項目間距 */
+          padding-left: 0.3rem; /* 統一左側內邊距 */
+        }
+        .contact-info li i {
+          margin-right: 0.75rem; /* 圖標右邊距 */
+          flex-shrink: 0; /* 防止圖標被壓縮 */
+          width: 1.2em; /* 固定圖標寬度 */
+          text-align: left; /* 圖標左對齊 */
+          line-height: 1.5; /* 設定行高讓圖標和文字對齊 */
+        }
+        .contact-info li span {
+          flex: 1; /* span占據剩餘空間 */
+          min-width: 0; /* 允許縮小 */
+        }
+        .email-content {
+          padding: 0; /* 移除左右間距，因為已經用flexbox對齊 */
+        }
+        /* 桌面版保持不換行 */
+        @media (min-width: 769px) {
+          .contact-info span {
+            white-space: nowrap;
+          }
+        }
+        /* 行動裝置允許自動換行 */
+        @media (max-width: 768px) {
+          .contact-info span {
+            white-space: normal;
+            display: inline-block;
+          }
         }
         .social-links {
           display: flex;
@@ -100,6 +139,14 @@ class AppFooter extends HTMLElement {
           border-top: 1px solid rgba(255,255,255,0.1);
         }
         
+        /* 中等螢幕 - 兩列布局 */
+        @media (max-width: 1024px) and (min-width: 769px) {
+          .footer-content {
+            grid-template-columns: repeat(2, 1fr); /* 兩個區域一列 */
+            gap: 1.5rem;
+          }
+        }
+        
         @media (max-width: 768px) {
           .footer-content {
             grid-template-columns: 1fr 1fr; /* 第一排：關於海放你、立即預約 */
@@ -107,8 +154,13 @@ class AppFooter extends HTMLElement {
             text-align: center;
           }
           
+          .footer-section {
+            padding: 0 1rem; /* 添加左右邊距 */
+          }
+          
           .footer-section:nth-child(3) { /* 聯絡資訊 */
             grid-column: 1 / -1; /* 占滿整個寬度 */
+            text-align: left; /* 聯絡資訊區塊向左對齊 */
           }
           
           .footer-section:nth-child(4) { /* 追蹤我們 */
@@ -140,6 +192,10 @@ class AppFooter extends HTMLElement {
           .footer-content {
             padding: 0 0.5rem;
             gap: 1rem;
+          }
+          
+          .footer-section {
+            padding: 0 1.5rem; /* 超小螢幕增加更多左右邊距 */
           }
           
           .footer-section h4 {
@@ -183,10 +239,10 @@ class AppFooter extends HTMLElement {
         <div class="footer-section">
           <h4>聯絡資訊</h4>
           <ul class="contact-info">
-            <li><i class="fas fa-building"></i> 海放你基地活動有限公司</li>
-            <li><i class="fas fa-phone"></i> 預約專線：0979116598</li>
-            <li><i class="fas fa-envelope"></i> Email：<a href="mailto:havefunnybase@gmail.com" style="color: #fff; text-decoration: none;">havefunnybase@gmail.com</a></li>
-            <li><i class="fas fa-map-marker-alt"></i> 花蓮營區：<a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5285056,850m/data=!3m2!1e3!4b1!4m9!3m8!1s0x346f532df52c4279:0x6e369ae51c5c2117!5m2!4m1!1i2!8m2!3d23.6131676!4d121.5285056!16s%2Fg%2F11pvc3kn3z?entry=ttu&g_ep=EgoyMDI1MDYxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="color: #fff; text-decoration: none;">977004花蓮縣豐濱鄉永豐路11-5號</a></li>
+            <li><i class="fas fa-building"></i> <span>海放你基地活動有限公司</span></li>
+            <li><i class="fas fa-phone"></i> <span>預約專線：0925226172</span></li>
+            <li><i class="fas fa-envelope"></i> <span class="email-content">Email：<a href="mailto:havefunnybase@gmail.com" style="color: #fff; text-decoration: none;">havefunnybase@gmail.com</a></span></li>
+            <li><i class="fas fa-map-marker-alt"></i> <span>花蓮營區：<a href="https://www.google.com/maps/place/%E6%B5%B7%E6%94%BE%E4%BD%A0%E5%9F%BA%E5%9C%B0+Have+Funny+Base/@23.6131676,121.5285056,850m/data=!3m2!1e3!4b1!4m9!3m8!1s0x346f532df52c4279:0x6e369ae51c5c2117!5m2!4m1!1i2!8m2!3d23.6131676!4d121.5285056!16s%2Fg%2F11pvc3kn3z?entry=ttu&g_ep=EgoyMDI1MDYxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="color: #fff; text-decoration: none;">977004花蓮縣豐濱鄉永豐路11-5號</a></span></li>
           </ul>
         </div>
         
